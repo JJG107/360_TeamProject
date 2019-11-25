@@ -93,8 +93,9 @@ public class DataSet {
 		}
 		else
 		{
-			return -1;
+			successCode = -1;
 		}
+		return successCode;
 	}
 	
 	/**
