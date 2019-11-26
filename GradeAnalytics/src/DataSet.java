@@ -6,6 +6,7 @@ public class DataSet {
 	private ArrayList<Float> data;
 	private float minValue;
 	private float maxValue;
+	private String errorLog;
 	
 	/**
 	 * Default Constructor
@@ -148,5 +149,184 @@ public class DataSet {
 			max = maxValue + 1; // Change later?
 		}
 		return max;
+	}
+	
+	/**
+	 * Deletes the first instance of the entered grade.
+	 * @param gradeToDelete The grade to delete.
+	 * @return An int indicating the success of the function.
+	 */
+	public int deleteGrade(float gradeToDelete)
+	{
+		int successCode = 0;
+		if (data.size() > 0)
+		{
+			for (int i = 0; i < data.size(); i++)
+			{
+				if (data.get(i) == gradeToDelete)
+				{
+					data.remove(i);
+					successCode = 1;
+				}
+			}
+		}
+		else
+		{
+			successCode = -1;
+		}
+		return successCode;
+	}
+	
+	/**
+	 * Creates a distribution of the grades indicating the
+	 * average grade for every 10% bracket.
+	 * @return An array of floats indicating the average grade for
+	 * each bracket.
+	 */
+	public float[] createDistribution()
+	{
+		float[] distribution = new float[10];
+		int[] count = new int[10];
+		float totalRange = maxValue - minValue;
+		// Determine what falls within what range
+		for (int i = 0; i < data.size(); i++)
+		{
+			float rawValue = data.get(i);
+			float percent = (rawValue - minValue) / totalRange;
+			if (percent > .9)
+			{
+				distribution[9] += rawValue;
+				count[9]++;
+			}
+			else if (percent > .8)
+			{
+				distribution[8] += rawValue;
+				count[8]++;
+			}
+			else if (percent > .7)
+			{
+				distribution[7] += rawValue;
+				count[7]++;
+			}
+			else if (percent > .6)
+			{
+				distribution[6] += rawValue;
+				count[6]++;
+			}
+			else if (percent > .5)
+			{
+				distribution[5] += rawValue;
+				count[5]++;
+			}
+			else if (percent > .4)
+			{
+				distribution[4] += rawValue;
+				count[4]++;
+			}
+			else if (percent > .3)
+			{
+				distribution[3] += rawValue;
+				count[3]++;
+			}
+			else if (percent > .2)
+			{
+				distribution[2] += rawValue;
+				count[2]++;
+			}
+			else if (percent > .1)
+			{
+				distribution[1] += rawValue;
+				count[1]++;
+			}
+			else
+			{
+				distribution[0] += rawValue;
+				count[0]++;
+			}
+		}
+		// Find Averages
+		for (int i = 0; i < 10; i++)
+		{
+			distribution[i] = distribution[i] / count[i];
+		}
+		
+		return distribution;
+	}
+	
+	/**
+	 * Gets what percent of grades fall within 10% bounds;
+	 * @return A an array of floats 
+	 */
+	public float[] getPercentages()
+	{
+		float[] percentages = new float[10];
+		int[] count = new int[10];
+		float totalRange = maxValue - minValue;
+		// Determine what falls within what range
+		for (int i = 0; i < data.size(); i++)
+		{
+			float rawValue = data.get(i);
+			float percent = (rawValue - minValue) / totalRange;
+			if (percent > .9)
+			{
+				count[9]++;
+			}
+			else if (percent > .8)
+			{
+				count[8]++;
+			}
+			else if (percent > .7)
+			{
+				count[7]++;
+			}
+			else if (percent > .6)
+			{
+				count[6]++;
+			}
+			else if (percent > .5)
+			{
+				count[5]++;
+			}
+			else if (percent > .4)
+			{
+				count[4]++;
+			}
+			else if (percent > .3)
+			{
+				count[3]++;
+			}
+			else if (percent > .2)
+			{
+				count[2]++;
+			}
+			else if (percent > .1)
+			{
+				count[1]++;
+			}
+			else
+			{
+				count[0]++;
+			}
+		}
+		// Find Percentages
+		for (int i = 0; i < 10; i++)
+		{
+			percentages[i] = count[i] / data.size();
+		}
+		
+		return percentages;
+	}
+	
+	public float[] getPercentageRanges()
+	{
+		float[] ranges = new float[11];
+		float totalRange = maxValue - minValue;
+		float shortRange = totalRange / 10;
+		// The ranges of each percentage
+		for(int i = 0; i < 10; i++)
+		{
+			ranges[i] = minValue + shortRange * i;
+		}
+		return ranges;
 	}
 }
