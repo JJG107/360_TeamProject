@@ -254,12 +254,11 @@ public class DataSet {
 	}
 	
 	/**
-	 * Gets what percent of grades fall within 10% bounds;
-	 * @return A an array of floats 
+	 * Gets a count of how many grades fall within 10% bounds;
+	 * @return A an array of ints 
 	 */
-	public float[] getPercentages()
+	public int[] getGraphCount()
 	{
-		float[] percentages = new float[10];
 		int[] count = new int[10];
 		float totalRange = maxValue - minValue;
 		// Determine what falls within what range
@@ -308,16 +307,15 @@ public class DataSet {
 				count[0]++;
 			}
 		}
-		// Find Percentages
-		for (int i = 0; i < 10; i++)
-		{
-			percentages[i] = count[i] / data.size();
-		}
 		
-		return percentages;
+		return count;
 	}
-	
-	public float[] getPercentageRanges()
+
+	/**
+	 * Gets the ranges for the graph.
+	 * @return An array of floats which indicate the 10% bounds.
+	 */
+	public float[] getGraphRanges()
 	{
 		float[] ranges = new float[11];
 		float totalRange = maxValue - minValue;
@@ -328,5 +326,85 @@ public class DataSet {
 			ranges[i] = minValue + shortRange * i;
 		}
 		return ranges;
+	}
+	
+	/**
+	 * Gets the mean of the dataset.
+	 * @return A float indicating the mean.
+	 */
+	public float getMean()
+	{
+		float total = 0;
+		for (int i = 0; i < data.size(); i++)
+		{
+			total += data.get(i);
+		}
+		total = total / data.size();
+		return total;
+	}
+	
+	/**
+	 * Gets the median of the dataset.
+	 * @return A float indicating the median.
+	 */
+	public float getMedian()
+	{
+		float median;
+		data.sort(null);
+		if (data.size() % 2 == 0)
+		{
+			float median1 = data.get(data.size() / 2 - 1);
+			float median2 = data.get(data.size() / 2);
+			median = (median1 + median2) / 2;
+		}
+		else
+		{
+			median = data.get(data.size() / 2);
+		}
+		return median;
+	}
+	
+	/**
+	 * Gets the mode of the dataset.
+	 * @return A an arrayList of floats indicating the mode/s.
+	 */
+	public ArrayList<Float> getMode()
+	{
+		data.sort(null);
+		ArrayList<Float> modes = new ArrayList<Float>();
+		ArrayList<Integer> count = new ArrayList<Integer>();
+		ArrayList<Float> values = new ArrayList<Float>();
+		int currentCount = 1;
+		float currentValue = data.get(0);
+		for (int i = 1; i < data.size(); i++)
+		{
+			if (currentValue == data.get(i))
+			{
+				currentCount++;
+			}
+			else
+			{
+				count.add(currentCount);
+				values.add(currentValue);
+				currentCount = 1;
+				currentValue = data.get(i);
+			}
+		}
+		count.add(currentCount);
+		values.add(currentValue);
+		
+		// Clone the counts, sort, and find max
+		ArrayList<Integer> sortedCounts = (ArrayList<Integer>) count.clone();
+		sortedCounts.sort(null);
+		int maxCount = sortedCounts.get(sortedCounts.size() - 1);
+		for (int i = 0; i < count.size(); i++)
+		{
+			if (count.get(i) == maxCount)
+			{
+				modes.add(values.get(i));
+			}
+		}
+		
+		return modes;
 	}
 }
