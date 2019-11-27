@@ -6,7 +6,7 @@ public class DataSet {
 	private ArrayList<Float> data;
 	private float minValue;
 	private float maxValue;
-	private String errorLog;
+	private ArrayList<String> errorLog;
 	
 	/**
 	 * Default Constructor
@@ -25,6 +25,15 @@ public class DataSet {
 	public ArrayList<Float> getData()
 	{
 		return data;
+	}
+	
+	/**
+	 * Gets the count of how many datapoints there are.
+	 * @return An indicating the count.
+	 */
+	public int getDataCount()
+	{
+		return data.size();
 	}
 	
 	/**
@@ -406,5 +415,32 @@ public class DataSet {
 		}
 		
 		return modes;
+	}
+
+	/**
+	 * Adds an error to the error log.
+	 * @param error The error to add to the log.
+	 */
+	public void addError(String error)
+	{
+		errorLog.add(error);
+	}
+	
+	/**
+	 * Retrieves the error log.
+	 * @return An ArrayList of all errors.
+	 */
+	public ArrayList<String> getErrorLog()
+	{
+		return errorLog;
+	}
+	
+	/**
+	 * Retrieves the last error in the error log.
+	 * @return A string indicating the last error.
+	 */
+	public String getLastError()
+	{
+		return errorLog.get(errorLog.size() - 1);
 	}
 }
