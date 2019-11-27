@@ -1,13 +1,12 @@
 import java.util.ArrayList;
 
-
 public class DataSet {
 
 	private ArrayList<Float> data;
 	private float minValue;
 	private float maxValue;
 	private ArrayList<String> errorLog;
-	
+
 	/**
 	 * Default Constructor
 	 */
@@ -17,7 +16,7 @@ public class DataSet {
 		minValue = 0;
 		maxValue = 0;
 	}
-	
+
 	/**
 	 * Returns the entire dataset.
 	 * @return An ArrayList of floats containing the dataset.
@@ -26,7 +25,7 @@ public class DataSet {
 	{
 		return data;
 	}
-	
+
 	/**
 	 * Gets the count of how many datapoints there are.
 	 * @return An indicating the count.
@@ -35,7 +34,7 @@ public class DataSet {
 	{
 		return data.size();
 	}
-	
+
 	/**
 	 * Sets the boundaries for the dataset.
 	 * @param min The minimum grade allowed.
@@ -46,7 +45,7 @@ public class DataSet {
 		minValue = min;
 		maxValue = max;
 	}
-	
+
 	/**
 	 * Appends a single float to the dataset.
 	 * @param value The float to append to the dataset.
@@ -63,10 +62,11 @@ public class DataSet {
 		else
 		{
 			successCode = -1;
+			errorLog.add("Appended data not within bounds");
 		}
 		return successCode;
 	}
-	
+
 	/**
 	 * Creates a new dataset with the passed value.
 	 * @param newData The data to create a new dataset from.
@@ -83,11 +83,11 @@ public class DataSet {
 		else
 		{
 			successCode = -1;
+			errorLog.add("No data in the file to create dataset");
 		}
 		return successCode;
-		
 	}
-	
+
 	/**
 	 * Appends data to the current dataset from an ArrayList.
 	 * @param addedData The ArrayList to add to the dataset.
@@ -104,10 +104,11 @@ public class DataSet {
 		else
 		{
 			successCode = -1;
+			errorLog.add("No data in the file to append");
 		}
 		return successCode;
 	}
-	
+
 	/**
 	 * Retrieves the minimum grade in the dataset.
 	 * @return A float which indicates the minimum grade.
@@ -129,11 +130,12 @@ public class DataSet {
 		}
 		else
 		{
-			min = minValue - 1; // Change later?
+			min = minValue - 1; // Maybe should be Min int
+			errorLog.add("No data in dataset to get min");
 		}
 		return min;
 	}
-	
+
 	/**
 	 * Retrieves the maximum grade in the dataset.
 	 * @return A float which indicates the maximum grade.
@@ -155,11 +157,12 @@ public class DataSet {
 		}
 		else
 		{
-			max = maxValue + 1; // Change later?
+			max = maxValue + 1; // Maybe should be max int
+			errorLog.add("No data in dataset to get max");
 		}
 		return max;
 	}
-	
+
 	/**
 	 * Deletes the first instance of the entered grade.
 	 * @param gradeToDelete The grade to delete.
@@ -182,10 +185,11 @@ public class DataSet {
 		else
 		{
 			successCode = -1;
+			errorLog.add("No data in dataset to delete grade");
 		}
 		return successCode;
 	}
-	
+
 	/**
 	 * Creates a distribution of the grades indicating the
 	 * average grade for every 10% bracket.
@@ -256,12 +260,20 @@ public class DataSet {
 		// Find Averages
 		for (int i = 0; i < 10; i++)
 		{
-			distribution[i] = distribution[i] / count[i];
+			if (count[i] != 0)
+			{
+				distribution[i] = distribution[i] / count[i];
+			}
+			else
+			{
+				// Add code for displaying N/A
+				// Maybe this should return an array of strings
+			}
 		}
-		
+
 		return distribution;
 	}
-	
+
 	/**
 	 * Gets a count of how many grades fall within 10% bounds;
 	 * @return A an array of ints 
@@ -316,7 +328,7 @@ public class DataSet {
 				count[0]++;
 			}
 		}
-		
+
 		return count;
 	}
 
@@ -336,7 +348,7 @@ public class DataSet {
 		}
 		return ranges;
 	}
-	
+
 	/**
 	 * Gets the mean of the dataset.
 	 * @return A float indicating the mean.
@@ -348,10 +360,18 @@ public class DataSet {
 		{
 			total += data.get(i);
 		}
-		total = total / data.size();
+		if (data.size() != 0)
+		{
+			total = total / data.size();
+		}
+		else
+		{
+			errorLog.add("No data in dataset to get mean");
+			total = minValue - 1;
+		}
 		return total;
 	}
-	
+
 	/**
 	 * Gets the median of the dataset.
 	 * @return A float indicating the median.
@@ -359,20 +379,28 @@ public class DataSet {
 	public float getMedian()
 	{
 		float median;
-		data.sort(null);
-		if (data.size() % 2 == 0)
+		if (data.size() > 0)
 		{
-			float median1 = data.get(data.size() / 2 - 1);
-			float median2 = data.get(data.size() / 2);
-			median = (median1 + median2) / 2;
+			data.sort(null);
+			if (data.size() % 2 == 0)
+			{
+				float median1 = data.get(data.size() / 2 - 1);
+				float median2 = data.get(data.size() / 2);
+				median = (median1 + median2) / 2;
+			}
+			else
+			{
+				median = data.get(data.size() / 2);
+			}
 		}
 		else
 		{
-			median = data.get(data.size() / 2);
+			errorLog.add("No data in dataset to get median");
+			median = minValue - 1;
 		}
 		return median;
 	}
-	
+
 	/**
 	 * Gets the mode of the dataset.
 	 * @return A an arrayList of floats indicating the mode/s.
@@ -381,39 +409,46 @@ public class DataSet {
 	{
 		data.sort(null);
 		ArrayList<Float> modes = new ArrayList<Float>();
-		ArrayList<Integer> count = new ArrayList<Integer>();
-		ArrayList<Float> values = new ArrayList<Float>();
-		int currentCount = 1;
-		float currentValue = data.get(0);
-		for (int i = 1; i < data.size(); i++)
+		if (data.size() > 0)
 		{
-			if (currentValue == data.get(i))
+			ArrayList<Integer> count = new ArrayList<Integer>();
+			ArrayList<Float> values = new ArrayList<Float>();
+			int currentCount = 1;
+			float currentValue = data.get(0);
+			for (int i = 1; i < data.size(); i++)
 			{
-				currentCount++;
+				if (currentValue == data.get(i))
+				{
+					currentCount++;
+				}
+				else
+				{
+					count.add(currentCount);
+					values.add(currentValue);
+					currentCount = 1;
+					currentValue = data.get(i);
+				}
 			}
-			else
+			count.add(currentCount);
+			values.add(currentValue);
+
+			// Clone the counts, sort, and find max
+			ArrayList<Integer> sortedCounts = (ArrayList<Integer>) count.clone();
+			sortedCounts.sort(null);
+			int maxCount = sortedCounts.get(sortedCounts.size() - 1);
+			for (int i = 0; i < count.size(); i++)
 			{
-				count.add(currentCount);
-				values.add(currentValue);
-				currentCount = 1;
-				currentValue = data.get(i);
+				if (count.get(i) == maxCount)
+				{
+					modes.add(values.get(i));
+				}
 			}
 		}
-		count.add(currentCount);
-		values.add(currentValue);
-		
-		// Clone the counts, sort, and find max
-		ArrayList<Integer> sortedCounts = (ArrayList<Integer>) count.clone();
-		sortedCounts.sort(null);
-		int maxCount = sortedCounts.get(sortedCounts.size() - 1);
-		for (int i = 0; i < count.size(); i++)
+		else
 		{
-			if (count.get(i) == maxCount)
-			{
-				modes.add(values.get(i));
-			}
+			errorLog.add("No data to get mode from");
 		}
-		
+
 		return modes;
 	}
 
@@ -425,7 +460,7 @@ public class DataSet {
 	{
 		errorLog.add(error);
 	}
-	
+
 	/**
 	 * Retrieves the error log.
 	 * @return An ArrayList of all errors.
@@ -434,7 +469,7 @@ public class DataSet {
 	{
 		return errorLog;
 	}
-	
+
 	/**
 	 * Retrieves the last error in the error log.
 	 * @return A string indicating the last error.
