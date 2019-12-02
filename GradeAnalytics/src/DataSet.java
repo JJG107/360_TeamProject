@@ -51,20 +51,21 @@ public class DataSet {
 	 * @param value The float to append to the dataset.
 	 * @return An int indicating whether the value falls within the boundaries.
 	 */
-	public int appendSingleValue(float value)
+	public String appendSingleValue(float value)
 	{
-		int successCode = 0;
+		String message;
 		if (value > minValue && value < maxValue)
 		{
 			data.add(value);
-			successCode = 1;
+			message = "Data added";
 		}
 		else
 		{
-			successCode = -1;
-			errorLog.add("Appended data not within bounds");
+			message = "Appended data not within bounds";
+			errorLog.add(message);
+			
 		}
-		return successCode;
+		return message;
 	}
 
 	/**
@@ -72,20 +73,46 @@ public class DataSet {
 	 * @param newData The data to create a new dataset from.
 	 * @return An int indicating the success of the function.
 	 */
-	public int createDataFromFile(ArrayList<Float> newData)
+	public String createDataFromFile(ArrayList<Float> newData)
 	{
-		int successCode = 0;
+		String message;
 		if (newData.size() > 0)
 		{
-			data = newData;
-			successCode = 1;
+			boolean withinBounds = true;
+			ArrayList<Integer> notWithinBounds = new ArrayList<Integer>();
+			for (int i = 0; i < newData.size(); i++)
+			{
+				if (!(newData.get(i) < minValue) || !(newData.get(i) > maxValue))
+				{
+					withinBounds = false;
+					notWithinBounds.add(i);
+				}
+			}
+			if (withinBounds)
+			{
+				data = newData;
+				message = "Created Dataset";
+			}
+			else
+			{
+				message = "The following data is not within bounds: ";
+				for (int i = 0; i < notWithinBounds.size(); i++)
+				{
+					message += notWithinBounds.get(i);
+					if (i < notWithinBounds.size() - 1)
+					{
+						message += ", ";
+					}
+				}
+				errorLog.add(message);
+			}
 		}
 		else
 		{
-			successCode = -1;
-			errorLog.add("No data in the file to create dataset");
+			message = "No data in the file to create dataset";
+			errorLog.add(message);
 		}
-		return successCode;
+		return message;
 	}
 
 	/**
@@ -93,20 +120,46 @@ public class DataSet {
 	 * @param addedData The ArrayList to add to the dataset.
 	 * @return An int that indicates the success of the function.
 	 */
-	public int appendDataFromFile(ArrayList<Float> addedData)
+	public String appendDataFromFile(ArrayList<Float> addedData)
 	{
-		int successCode = 0;
+		String message;
 		if (addedData.size() > 0)
 		{
-			data.addAll(addedData);
-			successCode = 1;
+			boolean withinBounds = true;
+			ArrayList<Integer> notWithinBounds = new ArrayList<Integer>();
+			for (int i = 0; i < addedData.size(); i++)
+			{
+				if (!(addedData.get(i) < minValue) || !(addedData.get(i) > maxValue))
+				{
+					withinBounds = false;
+					notWithinBounds.add(i);
+				}
+			}
+			if (withinBounds)
+			{
+				data.addAll(addedData);
+				message = "Appended to Dataset";
+			}
+			else
+			{
+				message = "The following data is not within bounds: ";
+				for (int i = 0; i < notWithinBounds.size(); i++)
+				{
+					message += notWithinBounds.get(i);
+					if (i < notWithinBounds.size() - 1)
+					{
+						message += ", ";
+					}
+				}
+				errorLog.add(message);
+			}
 		}
 		else
 		{
-			successCode = -1;
-			errorLog.add("No data in the file to append");
+			message = "No data in the file to append to dataset";
+			errorLog.add(message);
 		}
-		return successCode;
+		return message;
 	}
 
 	/**
@@ -114,9 +167,10 @@ public class DataSet {
 	 * @return A float which indicates the minimum grade.
 	 * If the value returned is below the minValue then there is no data.
 	 */
-	public float getMin()
+	public String getMin()
 	{
-		float min; // Change later
+		String message;
+		float min;
 		if (data.size() > 0)
 		{
 			min = data.get(0);
@@ -127,13 +181,14 @@ public class DataSet {
 					min = data.get(i);
 				}
 			}
+			message = "" + min;
 		}
 		else
 		{
-			min = minValue - 1; // Maybe should be Min int
-			errorLog.add("No data in dataset to get min");
+			message = "No data in dataset to get min";
+			errorLog.add(message);
 		}
-		return min;
+		return message;
 	}
 
 	/**
@@ -141,9 +196,10 @@ public class DataSet {
 	 * @return A float which indicates the maximum grade.
 	 * If the value returned is above the maxValue then there is no data.
 	 */
-	public float getMax()
+	public String getMax()
 	{
-		float max; // Change later
+		String message;
+		float max;
 		if (data.size() > 0)
 		{
 			max = data.get(0);
@@ -154,13 +210,14 @@ public class DataSet {
 					max = data.get(i);
 				}
 			}
+			message = "" + max;
 		}
 		else
 		{
-			max = maxValue + 1; // Maybe should be max int
-			errorLog.add("No data in dataset to get max");
+			message = "No data in dataset to get max";
+			errorLog.add(message);
 		}
-		return max;
+		return message;
 	}
 
 	/**
@@ -168,26 +225,33 @@ public class DataSet {
 	 * @param gradeToDelete The grade to delete.
 	 * @return An int indicating the success of the function.
 	 */
-	public int deleteGrade(float gradeToDelete)
+	public String deleteGrade(float gradeToDelete)
 	{
-		int successCode = 0;
+		String message;
 		if (data.size() > 0)
 		{
+			boolean found = false;
+			message = "That datapoint does not exist";
 			for (int i = 0; i < data.size(); i++)
 			{
 				if (data.get(i) == gradeToDelete)
 				{
+					found = true;
 					data.remove(i);
-					successCode = 1;
+					message = "Successfully removed";
 				}
+			}
+			if (!found)
+			{	
+				errorLog.add(message);
 			}
 		}
 		else
 		{
-			successCode = -1;
-			errorLog.add("No data in dataset to delete grade");
+			message = "No data in dataset to delete grade";
+			errorLog.add(message);
 		}
-		return successCode;
+		return message;
 	}
 
 	/**
@@ -196,8 +260,9 @@ public class DataSet {
 	 * @return An array of floats indicating the average grade for
 	 * each bracket.
 	 */
-	public float[] createDistribution()
+	public String[] createDistribution()
 	{
+		String[] toReturn = new String[10];
 		float[] distribution = new float[10];
 		int[] count = new int[10];
 		float totalRange = maxValue - minValue;
@@ -262,16 +327,15 @@ public class DataSet {
 		{
 			if (count[i] != 0)
 			{
-				distribution[i] = distribution[i] / count[i];
+				toReturn[i] = "" + (distribution[i] / count[i]);
 			}
 			else
 			{
-				// Add code for displaying N/A
-				// Maybe this should return an array of strings
+				toReturn[i] = "N/A";
 			}
 		}
 
-		return distribution;
+		return toReturn;
 	}
 
 	/**
@@ -353,8 +417,9 @@ public class DataSet {
 	 * Gets the mean of the dataset.
 	 * @return A float indicating the mean.
 	 */
-	public float getMean()
+	public String getMean()
 	{
+		String message;
 		float total = 0;
 		for (int i = 0; i < data.size(); i++)
 		{
@@ -362,22 +427,24 @@ public class DataSet {
 		}
 		if (data.size() != 0)
 		{
-			total = total / data.size();
+			total = (total / data.size());
+			message = "The mean is: " + total;
 		}
 		else
 		{
-			errorLog.add("No data in dataset to get mean");
-			total = minValue - 1;
+			message = "No data in dataset to get mean";
+			errorLog.add(message);
 		}
-		return total;
+		return message;
 	}
 
 	/**
 	 * Gets the median of the dataset.
 	 * @return A float indicating the median.
 	 */
-	public float getMedian()
+	public String getMedian()
 	{
+		String message;
 		float median;
 		if (data.size() > 0)
 		{
@@ -392,23 +459,25 @@ public class DataSet {
 			{
 				median = data.get(data.size() / 2);
 			}
+			
+			message = "The median is: " + median;
 		}
 		else
 		{
-			errorLog.add("No data in dataset to get median");
-			median = minValue - 1;
+			message = "No data in dataset to get median";
+			errorLog.add(message);
 		}
-		return median;
+		return message;
 	}
 
 	/**
 	 * Gets the mode of the dataset.
-	 * @return A an arrayList of floats indicating the mode/s.
+	 * @return A  arrayList of floats indicating the mode/s.
 	 */
-	public ArrayList<Float> getMode()
+	public String getMode()
 	{
+		String message;
 		data.sort(null);
-		ArrayList<Float> modes = new ArrayList<Float>();
 		if (data.size() > 0)
 		{
 			ArrayList<Integer> count = new ArrayList<Integer>();
@@ -436,20 +505,26 @@ public class DataSet {
 			ArrayList<Integer> sortedCounts = (ArrayList<Integer>) count.clone();
 			sortedCounts.sort(null);
 			int maxCount = sortedCounts.get(sortedCounts.size() - 1);
+			message = "The mode(s) are: ";
 			for (int i = 0; i < count.size(); i++)
 			{
 				if (count.get(i) == maxCount)
 				{
-					modes.add(values.get(i));
+					message += values.get(i);
+					if (i < count.size() - 1)
+					{
+						message += ", ";
+					}
 				}
 			}
 		}
 		else
 		{
-			errorLog.add("No data to get mode from");
+			message = "No data to get mode from";
+			errorLog.add(message);
 		}
 
-		return modes;
+		return message;
 	}
 
 	/**
