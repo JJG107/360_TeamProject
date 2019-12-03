@@ -62,4 +62,78 @@ class DataSetTest {
 		assertEquals(testSet.getErrorLog().size(), 2);
 	}
 	
+	/**
+	 * Tests appending out of the bounds
+	 */
+	@Test
+	void AppendOutOfBounds() 
+	{
+		DataSet testSet = new DataSet();
+		testSet.setBoundaries(-100, 100);
+		String result = testSet.appendSingleValue((float)-100.1);
+		assertEquals(result, "Appended data not within bounds");
+		result = testSet.appendSingleValue((float)100.1);
+		assertEquals(result, "Appended data not within bounds");
+		assertEquals(testSet.getErrorLog().size(), 2);
+	}
+	
+	/**
+	 * Tests appending data on the edge of the bounds
+	 */
+	@Test
+	void AppendDataInBounds()
+	{
+		DataSet testSet = new DataSet();
+		testSet.setBoundaries(-100, 100);
+		String result = testSet.appendSingleValue((float)-100);
+		assertEquals(result, "Data added");
+		result = testSet.appendSingleValue((float)100);
+		assertEquals(result, "Data added");
+		assertEquals(testSet.getDataCount(), 2);
+	}
+	
+	/**
+	 * Tests deleting a grade
+	 */
+	@Test
+	void DeletingAGrade()
+	{
+		DataSet testSet = new DataSet();
+		String result = testSet.appendSingleValue((float)0);
+		assertEquals(result, "Data added");
+		result = testSet.appendSingleValue((float)100);
+		assertEquals(result, "Data added");
+		assertEquals(testSet.getDataCount(), 2);
+		result = testSet.deleteGrade(100);
+		assertEquals(result, "Successfully removed");
+	}
+	
+	/**
+	 * Tests deleting a grade when there is no data
+	 */
+	@Test
+	void DeletingNoData()
+	{
+		DataSet testSet = new DataSet();
+		String result = testSet.deleteGrade(-100);
+		assertEquals(result, "No data in dataset to delete grade");
+	}
+	
+	/**
+	 * Tests deleting a grade that does not exist
+	 */
+	@Test
+	void DeletingAGradeDoesNotExist()
+	{
+		DataSet testSet = new DataSet();
+		String result = testSet.appendSingleValue((float)100);
+		assertEquals(result, "Data added");
+		result = testSet.appendSingleValue((float)100);
+		assertEquals(result, "Data added");
+		assertEquals(testSet.getDataCount(), 2);
+		result = testSet.deleteGrade(-100);
+		assertEquals(result, "That datapoint does not exist");
+		assertEquals(testSet.getDataCount(), 2);
+	}
+	
 }

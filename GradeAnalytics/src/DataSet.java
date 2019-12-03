@@ -18,7 +18,7 @@ public class DataSet {
 		data = new ArrayList<Float>();
 		errorLog = new ArrayList<String>();
 		minValue = 0;
-		maxValue = 0;
+		maxValue = 100;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class DataSet {
 	public String appendSingleValue(float value)
 	{
 		String message;
-		if (value > minValue && value < maxValue)
+		if (value >= minValue && value <= maxValue)
 		{
 			data.add(value);
 			message = "Data added";
