@@ -44,10 +44,18 @@ public class DataSet {
 	 * @param min The minimum grade allowed.
 	 * @param max The maximum grade allowed. 
 	 */
-	public void setBoundaries(float min, float max)
+	public String setBoundaries(float min, float max)
 	{
+		String message = "Boundaries Set";
 		minValue = min;
 		maxValue = max;
+		int removed = removeOutOfBoundaryData();
+		if (removed > 0)
+		{
+			message = "Data points out of bounds, " + removed + " data points deleted";
+			addError(message);
+		}
+		return message;
 	}
 
 	/**
@@ -715,5 +723,25 @@ public class DataSet {
 			}
 		}
 		return toReturn;
+	}
+	
+	/**
+	 * Removes data based on the changed bounds.
+	 * @return An int indicating how much data was deleted.
+	 */
+	private int removeOutOfBoundaryData()
+	{
+		int removedEntries = 0;
+		ArrayList<Float> toRemove = new ArrayList<Float>();
+		for (int i = 0; i < data.size(); i++)
+		{
+			if ((data.get(i) < minValue) || (data.get(i) > maxValue))
+			{
+				toRemove.add(data.get(i));
+				removedEntries++;
+			}
+		}
+		data.removeAll(toRemove);
+		return removedEntries;
 	}
 }

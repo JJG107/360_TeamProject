@@ -284,6 +284,9 @@ class DataSetTest {
 
 	// Create Section
 
+	/**
+	 * Tests creating a data set from a text file
+	 */
 	@Test
 	void CreateFromTxtFile()
 	{
@@ -312,6 +315,9 @@ class DataSetTest {
 		file.delete();
 	}
 
+	/**
+	 * Tests creating a dataset from a csv file
+	 */
 	@Test
 	void CreateFromCsvFile()
 	{
@@ -340,6 +346,9 @@ class DataSetTest {
 		file.delete();
 	}
 
+	/**
+	 * Tests creating a dataset from an invalid file type
+	 */
 	@Test
 	void CreateFromInvalidFileType()
 	{
@@ -362,6 +371,9 @@ class DataSetTest {
 		file.delete();
 	}
 
+	/**
+	 * Tests creating a dataset from a nonexistent file
+	 */
 	@Test
 	void CreateFromNonexistentFile()
 	{
@@ -392,6 +404,9 @@ class DataSetTest {
 		file.delete();
 	}
 
+	/**
+	 * Tests creating a dataset from improperly formatted file
+	 */
 	@Test
 	void CreateNonNumbers()
 	{
@@ -415,6 +430,9 @@ class DataSetTest {
 	}
 
 	// Append Section
+	/**
+	 * Tests appending from a txt file
+	 */
 	@Test
 	void AppendFromTxtFile()
 	{
@@ -444,6 +462,9 @@ class DataSetTest {
 		file.delete();
 	}
 
+	/**
+	 * Tests appending from a csv file
+	 */
 	@Test
 	void AppendFromCsvFile()
 	{
@@ -472,7 +493,10 @@ class DataSetTest {
 		}
 		file.delete();
 	}
-
+	
+	/**
+	 * Tests appending from a blank file
+	 */
 	@Test
 	void AppendFromBlankFile()
 	{
@@ -499,6 +523,9 @@ class DataSetTest {
 		file.delete();
 	}
 
+	/**
+	 * Tests appending from an invalid file type
+	 */
 	@Test
 	void AppendFromInvalidFileType()
 	{
@@ -522,7 +549,10 @@ class DataSetTest {
 		assertEquals(testSet.getDataCount(), 1);
 		file.delete();
 	}
-
+	
+	/**
+	 * Tests appending from a nonexistent file
+	 */
 	@Test
 	void AppendFromNonexistentFile()
 	{
@@ -532,7 +562,11 @@ class DataSetTest {
 		assertEquals(result, "File does not exist");
 		assertEquals(testSet.getDataCount(), 1);
 	}
-
+	
+	/**
+	 * Tests appending from a file that contains data
+	 * which is out of bounds
+	 */
 	@Test
 	void AppendOutOfBoundsFromFile()
 	{
@@ -557,6 +591,10 @@ class DataSetTest {
 		file.delete();
 	}
 
+	/**
+	 * Tests appending data which is not float or int
+	 * values
+	 */
 	@Test
 	void AppendNonNumbers()
 	{
