@@ -1,0 +1,281 @@
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class DataSetTest {
+
+	/**
+	 * Tests basic class functionality
+	 */
+	@Test
+	void BasicConstruction() 
+	{
+		DataSet testSet = new DataSet();
+		testSet.setBoundaries(-100, 100);
+		String result = testSet.appendSingleValue(0);
+		assertEquals(result, "Data added");
+	}
+	
+	/**
+	 * Tests getting the minimum
+	 */
+	@Test
+	void gettingMinimum() 
+	{
+		DataSet testSet = new DataSet();
+		testSet.setBoundaries(-100, 100);
+		String result = testSet.appendSingleValue(-1);
+		assertEquals(result, "Data added");
+		result = testSet.appendSingleValue(1);
+		assertEquals(result, "Data added");
+		String min = testSet.getMin();
+		assertEquals(Float.parseFloat(min), -1);
+	}
+	
+	/**
+	 * Tests getting the maximum
+	 */
+	@Test
+	void gettingMaximum() 
+	{
+		DataSet testSet = new DataSet();
+		testSet.setBoundaries(-100, 100);
+		String result = testSet.appendSingleValue(-1);
+		assertEquals(result, "Data added");
+		result = testSet.appendSingleValue(1);
+		assertEquals(result, "Data added");
+		String max = testSet.getMax();
+		assertEquals(Float.parseFloat(max), 1);
+	}
+	
+	/**
+	 * Tests errors with minimum and maximum
+	 */
+	@Test
+	void gettingMinAndMaxWithNoData() 
+	{
+		DataSet testSet = new DataSet();
+		String max = testSet.getMax();
+		String min = testSet.getMin();
+		assertEquals(min, "No data in dataset to get min");
+		assertEquals(max, "No data in dataset to get max");
+		assertEquals(testSet.getErrorLog().size(), 2);
+	}
+	
+	/**
+	 * Tests appending out of the bounds
+	 */
+	@Test
+	void AppendOutOfBounds() 
+	{
+		DataSet testSet = new DataSet();
+		testSet.setBoundaries(-100, 100);
+		String result = testSet.appendSingleValue((float)-100.1);
+		assertEquals(result, "Appended data not within bounds");
+		result = testSet.appendSingleValue((float)100.1);
+		assertEquals(result, "Appended data not within bounds");
+		assertEquals(testSet.getErrorLog().size(), 2);
+	}
+	
+	/**
+	 * Tests appending data on the edge of the bounds
+	 */
+	@Test
+	void AppendDataInBounds()
+	{
+		DataSet testSet = new DataSet();
+		testSet.setBoundaries(-100, 100);
+		String result = testSet.appendSingleValue((float)-100);
+		assertEquals(result, "Data added");
+		result = testSet.appendSingleValue((float)100);
+		assertEquals(result, "Data added");
+		assertEquals(testSet.getDataCount(), 2);
+	}
+	
+	/**
+	 * Tests deleting a grade
+	 */
+	@Test
+	void DeletingAGrade()
+	{
+		DataSet testSet = new DataSet();
+		String result = testSet.appendSingleValue((float)0);
+		assertEquals(result, "Data added");
+		result = testSet.appendSingleValue((float)100);
+		assertEquals(result, "Data added");
+		assertEquals(testSet.getDataCount(), 2);
+		result = testSet.deleteGrade(100);
+		assertEquals(result, "Successfully removed");
+	}
+	
+	/**
+	 * Tests deleting a grade when there is no data
+	 */
+	@Test
+	void DeletingNoData()
+	{
+		DataSet testSet = new DataSet();
+		String result = testSet.deleteGrade(-100);
+		assertEquals(result, "No data in dataset to delete grade");
+	}
+	
+	/**
+	 * Tests deleting a grade that does not exist
+	 */
+	@Test
+	void DeletingAGradeDoesNotExist()
+	{
+		DataSet testSet = new DataSet();
+		String result = testSet.appendSingleValue((float)100);
+		assertEquals(result, "Data added");
+		result = testSet.appendSingleValue((float)100);
+		assertEquals(result, "Data added");
+		assertEquals(testSet.getDataCount(), 2);
+		result = testSet.deleteGrade(-100);
+		assertEquals(result, "That datapoint does not exist");
+		assertEquals(testSet.getDataCount(), 2);
+	}
+	
+	/**
+	 * Tests creating a simple distribution
+	 */
+	@Test
+	void CreateDistribution()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue((float)50);
+		testSet.appendSingleValue((float)52);
+		assertEquals(testSet.getDataCount(), 2);
+		String[] distribution = testSet.createDistribution();
+ 		assertEquals(Float.parseFloat(distribution[5]), 51);
+ 		assertEquals(distribution[8], "N/A");
+	}
+	
+	/**
+	 * Tests getting a simple graph count
+	 */
+	@Test
+	void CreateGraphCount()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue((float)50);
+		testSet.appendSingleValue((float)52);
+		assertEquals(testSet.getDataCount(), 2);
+		int[] count = testSet.getGraphCount();
+ 		assertEquals(count[5], 2);
+ 		assertEquals(count[8], 0);
+	}
+	
+	/**
+	 * Tests getting a simple graph range
+	 */
+	@Test
+	void GetDefaultRanges()
+	{
+		float start = 0;
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue((float)50);
+		testSet.appendSingleValue((float)52);
+		assertEquals(testSet.getDataCount(), 2);
+		float[] ranges = testSet.getGraphRanges();
+		for (int i = 0; i < ranges.length; i++)
+		{
+	 		assertEquals(ranges[i], start);
+	 		start += 10;
+		}
+	}
+	
+	/**
+	 * Tests getting the mean
+	 */
+	@Test
+	void GetMean()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue((float)40);
+		testSet.appendSingleValue((float)45);
+		testSet.appendSingleValue((float)50);
+		testSet.appendSingleValue((float)55);
+		testSet.appendSingleValue((float)70);		
+		assertEquals(testSet.getMean(), "The mean is: 52.0");
+	}
+	
+	/**
+	 * Tests getting the mean with no data
+	 */
+	@Test
+	void GetMeanNoData()
+	{
+		DataSet testSet = new DataSet();		
+		assertEquals(testSet.getMean(), "No data in dataset to get mean");
+	}
+	
+	/**
+	 * Tests getting the median
+	 */
+	@Test
+	void GetMedian()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue((float)40);
+		testSet.appendSingleValue((float)45);
+		testSet.appendSingleValue((float)50);
+		testSet.appendSingleValue((float)55);
+		testSet.appendSingleValue((float)70);		
+		assertEquals(testSet.getMedian(), "The median is: 50.0");
+	}
+	
+	/**
+	 * Tests getting the median with no data
+	 */
+	@Test
+	void GetMedianNoData()
+	{
+		DataSet testSet = new DataSet();		
+		assertEquals(testSet.getMedian(), "No data in dataset to get median");
+	}
+	
+	/**
+	 * Tests getting the mode
+	 */
+	@Test
+	void GetMode()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue((float)40);
+		testSet.appendSingleValue((float)40);
+		testSet.appendSingleValue((float)45);
+		testSet.appendSingleValue((float)50);
+		testSet.appendSingleValue((float)55);
+		testSet.appendSingleValue((float)70);		
+		assertEquals(testSet.getMode(), "The mode(s) are: 40.0");
+	}
+	
+	/**
+	 * Tests getting the mode with multiple modes
+	 */
+	@Test
+	void GetModes()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue((float)40);
+		testSet.appendSingleValue((float)40);
+		testSet.appendSingleValue((float)45);
+		testSet.appendSingleValue((float)50);
+		testSet.appendSingleValue((float)55);
+		testSet.appendSingleValue((float)55);
+		testSet.appendSingleValue((float)70);		
+		assertEquals(testSet.getMode(), "The mode(s) are: 40.0, 55.0");
+	}
+	
+	/**
+	 * Tests getting the mode with no data
+	 */
+	@Test
+	void GetModeNoData()
+	{
+		DataSet testSet = new DataSet();		
+		assertEquals(testSet.getMode(), "No data to get mode from");
+	}
+	
+}
