@@ -1,8 +1,9 @@
-CSE 360 Group Project
-Monday 9:40 AM
+# CSE 360 Group Project
+### Team 24
 
-Group Members
-Greyson Britt
-Michael Cai
-Priya Ganguly
-James Girellini
+
+# Group Members
+## - Greyson Britt
+## - Michael Cai
+## - Priya Ganguly
+## - James Girellini
