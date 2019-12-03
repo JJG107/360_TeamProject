@@ -19,7 +19,7 @@ class DataSetTest {
 		String result = testSet.appendSingleValue(0);
 		assertEquals(result, "Data added");
 	}
-	
+
 	/**
 	 * Tests getting the minimum
 	 */
@@ -35,7 +35,7 @@ class DataSetTest {
 		String min = testSet.getMin();
 		assertEquals(Float.parseFloat(min), -1);
 	}
-	
+
 	/**
 	 * Tests getting the maximum
 	 */
@@ -51,7 +51,7 @@ class DataSetTest {
 		String max = testSet.getMax();
 		assertEquals(Float.parseFloat(max), 1);
 	}
-	
+
 	/**
 	 * Tests errors with minimum and maximum
 	 */
@@ -65,7 +65,7 @@ class DataSetTest {
 		assertEquals(max, "No data in dataset to get max");
 		assertEquals(testSet.getErrorLog().size(), 2);
 	}
-	
+
 	/**
 	 * Tests appending out of the bounds
 	 */
@@ -80,7 +80,7 @@ class DataSetTest {
 		assertEquals(result, "Appended data not within bounds");
 		assertEquals(testSet.getErrorLog().size(), 2);
 	}
-	
+
 	/**
 	 * Tests appending data on the edge of the bounds
 	 */
@@ -95,7 +95,7 @@ class DataSetTest {
 		assertEquals(result, "Data added");
 		assertEquals(testSet.getDataCount(), 2);
 	}
-	
+
 	/**
 	 * Tests deleting a grade
 	 */
@@ -111,7 +111,7 @@ class DataSetTest {
 		result = testSet.deleteGrade(100);
 		assertEquals(result, "Successfully removed");
 	}
-	
+
 	/**
 	 * Tests deleting a grade when there is no data
 	 */
@@ -122,7 +122,7 @@ class DataSetTest {
 		String result = testSet.deleteGrade(-100);
 		assertEquals(result, "No data in dataset to delete grade");
 	}
-	
+
 	/**
 	 * Tests deleting a grade that does not exist
 	 */
@@ -139,7 +139,7 @@ class DataSetTest {
 		assertEquals(result, "That datapoint does not exist");
 		assertEquals(testSet.getDataCount(), 2);
 	}
-	
+
 	/**
 	 * Tests creating a simple distribution
 	 */
@@ -151,10 +151,10 @@ class DataSetTest {
 		testSet.appendSingleValue((float)52);
 		assertEquals(testSet.getDataCount(), 2);
 		String[] distribution = testSet.createDistribution();
- 		assertEquals(Float.parseFloat(distribution[5]), 51);
- 		assertEquals(distribution[8], "N/A");
+		assertEquals(Float.parseFloat(distribution[5]), 51);
+		assertEquals(distribution[8], "N/A");
 	}
-	
+
 	/**
 	 * Tests getting a simple graph count
 	 */
@@ -166,10 +166,10 @@ class DataSetTest {
 		testSet.appendSingleValue((float)52);
 		assertEquals(testSet.getDataCount(), 2);
 		int[] count = testSet.getGraphCount();
- 		assertEquals(count[5], 2);
- 		assertEquals(count[8], 0);
+		assertEquals(count[5], 2);
+		assertEquals(count[8], 0);
 	}
-	
+
 	/**
 	 * Tests getting a simple graph range
 	 */
@@ -184,11 +184,11 @@ class DataSetTest {
 		float[] ranges = testSet.getGraphRanges();
 		for (int i = 0; i < ranges.length; i++)
 		{
-	 		assertEquals(ranges[i], start);
-	 		start += 10;
+			assertEquals(ranges[i], start);
+			start += 10;
 		}
 	}
-	
+
 	/**
 	 * Tests getting the mean
 	 */
@@ -203,7 +203,7 @@ class DataSetTest {
 		testSet.appendSingleValue((float)70);		
 		assertEquals(testSet.getMean(), "The mean is: 52.0");
 	}
-	
+
 	/**
 	 * Tests getting the mean with no data
 	 */
@@ -213,7 +213,7 @@ class DataSetTest {
 		DataSet testSet = new DataSet();		
 		assertEquals(testSet.getMean(), "No data in dataset to get mean");
 	}
-	
+
 	/**
 	 * Tests getting the median
 	 */
@@ -228,7 +228,7 @@ class DataSetTest {
 		testSet.appendSingleValue((float)70);		
 		assertEquals(testSet.getMedian(), "The median is: 50.0");
 	}
-	
+
 	/**
 	 * Tests getting the median with no data
 	 */
@@ -238,7 +238,7 @@ class DataSetTest {
 		DataSet testSet = new DataSet();		
 		assertEquals(testSet.getMedian(), "No data in dataset to get median");
 	}
-	
+
 	/**
 	 * Tests getting the mode
 	 */
@@ -254,7 +254,7 @@ class DataSetTest {
 		testSet.appendSingleValue((float)70);		
 		assertEquals(testSet.getMode(), "The mode(s) are: 40.0");
 	}
-	
+
 	/**
 	 * Tests getting the mode with multiple modes
 	 */
@@ -271,7 +271,7 @@ class DataSetTest {
 		testSet.appendSingleValue((float)70);		
 		assertEquals(testSet.getMode(), "The mode(s) are: 40.0, 55.0");
 	}
-	
+
 	/**
 	 * Tests getting the mode with no data
 	 */
@@ -281,7 +281,9 @@ class DataSetTest {
 		DataSet testSet = new DataSet();		
 		assertEquals(testSet.getMode(), "No data to get mode from");
 	}
-	
+
+	// Create Section
+
 	@Test
 	void CreateFromTxtFile()
 	{
@@ -309,7 +311,7 @@ class DataSetTest {
 		}
 		file.delete();
 	}
-	
+
 	@Test
 	void CreateFromCsvFile()
 	{
@@ -337,7 +339,7 @@ class DataSetTest {
 		}
 		file.delete();
 	}
-	
+
 	@Test
 	void CreateFromInvalidFileType()
 	{
@@ -359,7 +361,7 @@ class DataSetTest {
 		assertEquals(result, "File is not of type csv or txt");
 		file.delete();
 	}
-	
+
 	@Test
 	void CreateFromNonexistentFile()
 	{
@@ -367,7 +369,7 @@ class DataSetTest {
 		String result = testSet.createDataFromFile("TestFile.txt");
 		assertEquals(result, "File does not exist");
 	}
-	
+
 	@Test
 	void CreateOutOfBounds()
 	{
@@ -389,7 +391,7 @@ class DataSetTest {
 		assertEquals(result, "The following data indexes are not within bounds: 0, 4");
 		file.delete();
 	}
-	
+
 	@Test
 	void CreateNonNumbers()
 	{
@@ -409,6 +411,173 @@ class DataSetTest {
 		}
 		String result = testSet.createDataFromFile("TestFile.txt");
 		assertEquals(result, "The file does not contain only numbers");
+		file.delete();
+	}
+
+	// Append Section
+	@Test
+	void AppendFromTxtFile()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue(0);
+		File file = new File("TestFile.txt");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("1\n2\n3\n4\n5");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.appendDataFromFile("TestFile.txt");
+		assertEquals(result, "Appended To Dataset");
+		assertEquals(testSet.getDataCount(), 6);
+		ArrayList<Float> testData = testSet.getData();
+		for (int i = 0; i < testData.size(); i++)
+		{
+			assertEquals(testData.get(i), i);
+		}
+		file.delete();
+	}
+
+	@Test
+	void AppendFromCsvFile()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue(0);
+		File file = new File("TestFile.csv");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("1,2,3,4,5");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.appendDataFromFile("TestFile.csv");
+		assertEquals(result, "Appended To Dataset");
+		assertEquals(testSet.getDataCount(), 6);
+		ArrayList<Float> testData = testSet.getData();
+		for (int i = 0; i < testData.size(); i++)
+		{
+			assertEquals(testData.get(i), i);
+		}
+		file.delete();
+	}
+
+	@Test
+	void AppendFromBlankFile()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue(0);
+		File file = new File("TestFile.csv");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.appendDataFromFile("TestFile.csv");
+		assertEquals(result, "No data in the file to append to dataset");
+		assertEquals(testSet.getDataCount(), 1);
+		ArrayList<Float> testData = testSet.getData();
+		for (int i = 0; i < testData.size(); i++)
+		{
+			assertEquals(testData.get(i), i);
+		}
+		file.delete();
+	}
+
+	@Test
+	void AppendFromInvalidFileType()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue(0);
+		File file = new File("TestFile.ppt");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("0,1,2,3,4");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.appendDataFromFile("TestFile.ppt");
+		assertEquals(result, "File is not of type csv or txt");
+		assertEquals(testSet.getDataCount(), 1);
+		file.delete();
+	}
+
+	@Test
+	void AppendFromNonexistentFile()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue(0);
+		String result = testSet.appendDataFromFile("TestFile.txt");
+		assertEquals(result, "File does not exist");
+		assertEquals(testSet.getDataCount(), 1);
+	}
+
+	@Test
+	void AppendOutOfBoundsFromFile()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue(0);
+		File file = new File("TestFile.txt");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("-1\n1\n2\n3\n101");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.appendDataFromFile("TestFile.txt");
+		assertEquals(result, "The following data indexes are not within bounds: 0, 4");
+		assertEquals(testSet.getDataCount(), 1);
+		file.delete();
+	}
+
+	@Test
+	void AppendNonNumbers()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue(0);
+		File file = new File("TestFile.txt");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("4\n1\n2\nb\n11");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.appendDataFromFile("TestFile.txt");
+		assertEquals(result, "The file does not contain only numbers");
+		assertEquals(testSet.getDataCount(), 1);
 		file.delete();
 	}
 }

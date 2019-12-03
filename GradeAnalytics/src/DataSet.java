@@ -198,7 +198,7 @@ public class DataSet {
 					ArrayList<Integer> notWithinBounds = new ArrayList<Integer>();
 					for (int i = 0; i < newData.size(); i++)
 					{
-						if (!(newData.get(i) < minValue) || !(newData.get(i) > maxValue))
+						if ((newData.get(i) < minValue) || (newData.get(i) > maxValue))
 						{
 							withinBounds = false;
 							notWithinBounds.add(i);
