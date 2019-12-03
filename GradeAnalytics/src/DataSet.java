@@ -345,47 +345,47 @@ public class DataSet {
 		{
 			float rawValue = data.get(i);
 			float percent = (rawValue - minValue) / totalRange;
-			if (percent > .9)
+			if (percent >= .9)
 			{
 				distribution[9] += rawValue;
 				count[9]++;
 			}
-			else if (percent > .8)
+			else if (percent >= .8)
 			{
 				distribution[8] += rawValue;
 				count[8]++;
 			}
-			else if (percent > .7)
+			else if (percent >= .7)
 			{
 				distribution[7] += rawValue;
 				count[7]++;
 			}
-			else if (percent > .6)
+			else if (percent >= .6)
 			{
 				distribution[6] += rawValue;
 				count[6]++;
 			}
-			else if (percent > .5)
+			else if (percent >= .5)
 			{
 				distribution[5] += rawValue;
 				count[5]++;
 			}
-			else if (percent > .4)
+			else if (percent >= .4)
 			{
 				distribution[4] += rawValue;
 				count[4]++;
 			}
-			else if (percent > .3)
+			else if (percent >= .3)
 			{
 				distribution[3] += rawValue;
 				count[3]++;
 			}
-			else if (percent > .2)
+			else if (percent >= .2)
 			{
 				distribution[2] += rawValue;
 				count[2]++;
 			}
-			else if (percent > .1)
+			else if (percent >= .1)
 			{
 				distribution[1] += rawValue;
 				count[1]++;
@@ -425,39 +425,39 @@ public class DataSet {
 		{
 			float rawValue = data.get(i);
 			float percent = (rawValue - minValue) / totalRange;
-			if (percent > .9)
+			if (percent >= .9)
 			{
 				count[9]++;
 			}
-			else if (percent > .8)
+			else if (percent >= .8)
 			{
 				count[8]++;
 			}
-			else if (percent > .7)
+			else if (percent >= .7)
 			{
 				count[7]++;
 			}
-			else if (percent > .6)
+			else if (percent >= .6)
 			{
 				count[6]++;
 			}
-			else if (percent > .5)
+			else if (percent >= .5)
 			{
 				count[5]++;
 			}
-			else if (percent > .4)
+			else if (percent >= .4)
 			{
 				count[4]++;
 			}
-			else if (percent > .3)
+			else if (percent >= .3)
 			{
 				count[3]++;
 			}
-			else if (percent > .2)
+			else if (percent >= .2)
 			{
 				count[2]++;
 			}
-			else if (percent > .1)
+			else if (percent >= .1)
 			{
 				count[1]++;
 			}
@@ -480,7 +480,7 @@ public class DataSet {
 		float totalRange = maxValue - minValue;
 		float shortRange = totalRange / 10;
 		// The ranges of each percentage
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < 11; i++)
 		{
 			ranges[i] = minValue + shortRange * i;
 		}
@@ -585,12 +585,11 @@ public class DataSet {
 				if (count.get(i) == maxCount)
 				{
 					message += values.get(i);
-					if (i < count.size() - 1)
-					{
-						message += ", ";
-					}
+					message += ", ";
 				}
 			}
+			// Remove last comma
+			message = message.substring(0, message.length() - 2);
 		}
 		else
 		{
