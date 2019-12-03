@@ -16,6 +16,7 @@ public class DataSet {
 	public DataSet()
 	{
 		data = new ArrayList<Float>();
+		errorLog = new ArrayList<String>();
 		minValue = 0;
 		maxValue = 0;
 	}
