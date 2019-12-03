@@ -1,6 +1,10 @@
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 class DataSetTest {
 
@@ -278,4 +282,133 @@ class DataSetTest {
 		assertEquals(testSet.getMode(), "No data to get mode from");
 	}
 	
+	@Test
+	void CreateFromTxtFile()
+	{
+		DataSet testSet = new DataSet();
+		File file = new File("TestFile.txt");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("0\n1\n2\n3\n4");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.createDataFromFile("TestFile.txt");
+		assertEquals(result, "Created Dataset");
+		assertEquals(testSet.getDataCount(), 5);
+		ArrayList<Float> testData = testSet.getData();
+		for (int i = 0; i < testData.size(); i++)
+		{
+			assertEquals(testData.get(i), i);
+		}
+		file.delete();
+	}
+	
+	@Test
+	void CreateFromCsvFile()
+	{
+		DataSet testSet = new DataSet();
+		File file = new File("TestFile.csv");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("0,1,2,3,4");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.createDataFromFile("TestFile.csv");
+		assertEquals(result, "Created Dataset");
+		assertEquals(testSet.getDataCount(), 5);
+		ArrayList<Float> testData = testSet.getData();
+		for (int i = 0; i < testData.size(); i++)
+		{
+			assertEquals(testData.get(i), i);
+		}
+		file.delete();
+	}
+	
+	@Test
+	void CreateFromInvalidFileType()
+	{
+		DataSet testSet = new DataSet();
+		File file = new File("TestFile.ppt");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("0,1,2,3,4");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.createDataFromFile("TestFile.ppt");
+		assertEquals(result, "File is not of type csv or txt");
+		file.delete();
+	}
+	
+	@Test
+	void CreateFromNonexistentFile()
+	{
+		DataSet testSet = new DataSet();
+		String result = testSet.createDataFromFile("TestFile.txt");
+		assertEquals(result, "File does not exist");
+	}
+	
+	@Test
+	void CreateOutOfBounds()
+	{
+		DataSet testSet = new DataSet();
+		File file = new File("TestFile.txt");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("-1\n1\n2\n3\n101");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.createDataFromFile("TestFile.txt");
+		assertEquals(result, "The following data indexes are not within bounds: 0, 4");
+		file.delete();
+	}
+	
+	@Test
+	void CreateNonNumbers()
+	{
+		DataSet testSet = new DataSet();
+		File file = new File("TestFile.txt");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("4\n1\n2\nb\n11");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.createDataFromFile("TestFile.txt");
+		assertEquals(result, "The file does not contain only numbers");
+		file.delete();
+	}
 }

@@ -66,7 +66,7 @@ public class DataSet {
 		else
 		{
 			message = "Appended data not within bounds";
-			errorLog.add(message);
+			addError(message);
 
 		}
 		return message;
@@ -88,12 +88,12 @@ public class DataSet {
 		if (!file.exists())
 		{
 			message = "File does not exist";
-			errorLog.add(message);
+			addError(message);
 		}
 		else if (fileType == 0)
 		{
 			message = "File is not of type csv or txt";
-			errorLog.add(message);
+			addError(message);
 		}
 		else
 		{
@@ -115,7 +115,7 @@ public class DataSet {
 					ArrayList<Integer> notWithinBounds = new ArrayList<Integer>();
 					for (int i = 0; i < newData.size(); i++)
 					{
-						if (!(newData.get(i) < minValue) || !(newData.get(i) > maxValue))
+						if ((newData.get(i) < minValue) || (newData.get(i) > maxValue))
 						{
 							withinBounds = false;
 							notWithinBounds.add(i);
@@ -128,7 +128,7 @@ public class DataSet {
 					}
 					else
 					{
-						message = "The following data is not within bounds: ";
+						message = "The following data indexes are not within bounds: ";
 						for (int i = 0; i < notWithinBounds.size(); i++)
 						{
 							message += notWithinBounds.get(i);
@@ -137,19 +137,19 @@ public class DataSet {
 								message += ", ";
 							}
 						}
-						errorLog.add(message);
+						addError(message);
 					}
 				}
 				else
 				{
 					message = "No data in the file to create dataset";
-					errorLog.add(message);
+					addError(message);
 				}
 			}
 			catch (NumberFormatException e)
 			{
 				message = "The file does not contain only numbers";
-				errorLog.add(message);
+				addError(message);
 			}
 		}
 		return message;
@@ -171,12 +171,12 @@ public class DataSet {
 		if (!file.exists())
 		{
 			message = "File does not exist";
-			errorLog.add(message);
+			addError(message);
 		}
 		else if (fileType == 0)
 		{
 			message = "File is not of type csv or txt";
-			errorLog.add(message);
+			addError(message);
 		}
 		else
 		{
@@ -211,7 +211,7 @@ public class DataSet {
 					}
 					else
 					{
-						message = "The following data is not within bounds: ";
+						message = "The following data indexes are not within bounds: ";
 						for (int i = 0; i < notWithinBounds.size(); i++)
 						{
 							message += notWithinBounds.get(i);
@@ -220,19 +220,19 @@ public class DataSet {
 								message += ", ";
 							}
 						}
-						errorLog.add(message);
+						addError(message);
 					}
 				}
 				else
 				{
 					message = "No data in the file to append to dataset";
-					errorLog.add(message);
+					addError(message);
 				}
 			}
 			catch (NumberFormatException e)
 			{
 				message = "The file does not contain only numbers";
-				errorLog.add(message);
+				addError(message);
 			}
 		}
 		return message;
@@ -261,7 +261,7 @@ public class DataSet {
 		else
 		{
 			message = "No data in dataset to get min";
-			errorLog.add(message);
+			addError(message);
 		}
 		return message;
 	}
@@ -289,7 +289,7 @@ public class DataSet {
 		else
 		{
 			message = "No data in dataset to get max";
-			errorLog.add(message);
+			addError(message);
 		}
 		return message;
 	}
@@ -317,13 +317,13 @@ public class DataSet {
 			}
 			if (!found)
 			{	
-				errorLog.add(message);
+				addError(message);
 			}
 		}
 		else
 		{
 			message = "No data in dataset to delete grade";
-			errorLog.add(message);
+			addError(message);
 		}
 		return message;
 	}
@@ -507,7 +507,7 @@ public class DataSet {
 		else
 		{
 			message = "No data in dataset to get mean";
-			errorLog.add(message);
+			addError(message);
 		}
 		return message;
 	}
@@ -539,7 +539,7 @@ public class DataSet {
 		else
 		{
 			message = "No data in dataset to get median";
-			errorLog.add(message);
+			addError(message);
 		}
 		return message;
 	}
@@ -594,7 +594,7 @@ public class DataSet {
 		else
 		{
 			message = "No data to get mode from";
-			errorLog.add(message);
+			addError(message);
 		}
 
 		return message;
@@ -641,7 +641,7 @@ public class DataSet {
 		int extensionPeriod = fileName.lastIndexOf(".");
 		if (extensionPeriod > 0)
 		{
-			String extensionString = fileName.substring(extensionPeriod);
+			String extensionString = fileName.substring(extensionPeriod + 1);
 			if (extensionString.compareTo("txt") == 0)
 			{
 				extension = 1;
