@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class DataSet {
 
@@ -27,7 +30,7 @@ public class DataSet {
 	}
 
 	/**
-	 * Gets the count of how many datapoints there are.
+	 * Gets the count of how many data points there are.
 	 * @return An indicating the count.
 	 */
 	public int getDataCount()
@@ -49,7 +52,7 @@ public class DataSet {
 	/**
 	 * Appends a single float to the dataset.
 	 * @param value The float to append to the dataset.
-	 * @return An int indicating whether the value falls within the boundaries.
+	 * @return A string indicating whether the value falls within the boundaries.
 	 */
 	public String appendSingleValue(float value)
 	{
@@ -63,109 +66,180 @@ public class DataSet {
 		{
 			message = "Appended data not within bounds";
 			errorLog.add(message);
-			
+
 		}
 		return message;
 	}
 
 	/**
 	 * Creates a new dataset with the passed value.
-	 * @param newData The data to create a new dataset from.
-	 * @return An int indicating the success of the function.
+	 * @param fileName The name of the file to load.
+	 * @return A string indicating the success of the function.
 	 */
-	public String createDataFromFile(ArrayList<Float> newData)
+	public String createDataFromFile(String fileName)
 	{
 		String message;
-		if (newData.size() > 0)
+		File file = new File(fileName);
+
+		// Create the dataset from the file
+		ArrayList<Float> newData;
+		int fileType = validateName(fileName);
+		if (!file.exists())
 		{
-			boolean withinBounds = true;
-			ArrayList<Integer> notWithinBounds = new ArrayList<Integer>();
-			for (int i = 0; i < newData.size(); i++)
-			{
-				if (!(newData.get(i) < minValue) || !(newData.get(i) > maxValue))
-				{
-					withinBounds = false;
-					notWithinBounds.add(i);
-				}
-			}
-			if (withinBounds)
-			{
-				data = newData;
-				message = "Created Dataset";
-			}
-			else
-			{
-				message = "The following data is not within bounds: ";
-				for (int i = 0; i < notWithinBounds.size(); i++)
-				{
-					message += notWithinBounds.get(i);
-					if (i < notWithinBounds.size() - 1)
-					{
-						message += ", ";
-					}
-				}
-				errorLog.add(message);
-			}
+			message = "File does not exist";
+			errorLog.add(message);
+		}
+		else if (fileType == 0)
+		{
+			message = "File is not of type csv or txt";
+			errorLog.add(message);
 		}
 		else
 		{
-			message = "No data in the file to create dataset";
-			errorLog.add(message);
+			try
+			{
+				if (fileType == 1)
+				{
+					newData = readTxtFile(file);
+				}
+				else 
+				{
+					newData = readCsvFile(file);
+				}
+
+				// Validate the read in file
+				if (newData.size() > 0)
+				{
+					boolean withinBounds = true;
+					ArrayList<Integer> notWithinBounds = new ArrayList<Integer>();
+					for (int i = 0; i < newData.size(); i++)
+					{
+						if (!(newData.get(i) < minValue) || !(newData.get(i) > maxValue))
+						{
+							withinBounds = false;
+							notWithinBounds.add(i);
+						}
+					}
+					if (withinBounds)
+					{
+						data = newData;
+						message = "Created Dataset";
+					}
+					else
+					{
+						message = "The following data is not within bounds: ";
+						for (int i = 0; i < notWithinBounds.size(); i++)
+						{
+							message += notWithinBounds.get(i);
+							if (i < notWithinBounds.size() - 1)
+							{
+								message += ", ";
+							}
+						}
+						errorLog.add(message);
+					}
+				}
+				else
+				{
+					message = "No data in the file to create dataset";
+					errorLog.add(message);
+				}
+			}
+			catch (NumberFormatException e)
+			{
+				message = "The file does not contain only numbers";
+				errorLog.add(message);
+			}
 		}
 		return message;
 	}
 
 	/**
 	 * Appends data to the current dataset from an ArrayList.
-	 * @param addedData The ArrayList to add to the dataset.
-	 * @return An int that indicates the success of the function.
+	 * @param fileName The name of the file to load.
+	 * @return A string that indicates the success of the function.
 	 */
-	public String appendDataFromFile(ArrayList<Float> addedData)
+	public String appendDataFromFile(String fileName)
 	{
 		String message;
-		if (addedData.size() > 0)
+		File file = new File(fileName);
+
+		// Create the dataset from the file
+		ArrayList<Float> newData;
+		int fileType = validateName(fileName);
+		if (!file.exists())
 		{
-			boolean withinBounds = true;
-			ArrayList<Integer> notWithinBounds = new ArrayList<Integer>();
-			for (int i = 0; i < addedData.size(); i++)
-			{
-				if (!(addedData.get(i) < minValue) || !(addedData.get(i) > maxValue))
-				{
-					withinBounds = false;
-					notWithinBounds.add(i);
-				}
-			}
-			if (withinBounds)
-			{
-				data.addAll(addedData);
-				message = "Appended to Dataset";
-			}
-			else
-			{
-				message = "The following data is not within bounds: ";
-				for (int i = 0; i < notWithinBounds.size(); i++)
-				{
-					message += notWithinBounds.get(i);
-					if (i < notWithinBounds.size() - 1)
-					{
-						message += ", ";
-					}
-				}
-				errorLog.add(message);
-			}
+			message = "File does not exist";
+			errorLog.add(message);
+		}
+		else if (fileType == 0)
+		{
+			message = "File is not of type csv or txt";
+			errorLog.add(message);
 		}
 		else
 		{
-			message = "No data in the file to append to dataset";
-			errorLog.add(message);
+			try
+			{
+				if (fileType == 1)
+				{
+					newData = readTxtFile(file);
+				}
+				else 
+				{
+					newData = readCsvFile(file);
+				}
+
+				// Validate the read in file
+				if (newData.size() > 0)
+				{
+					boolean withinBounds = true;
+					ArrayList<Integer> notWithinBounds = new ArrayList<Integer>();
+					for (int i = 0; i < newData.size(); i++)
+					{
+						if (!(newData.get(i) < minValue) || !(newData.get(i) > maxValue))
+						{
+							withinBounds = false;
+							notWithinBounds.add(i);
+						}
+					}
+					if (withinBounds)
+					{
+						data.addAll(newData);
+						message = "Appended To Dataset";
+					}
+					else
+					{
+						message = "The following data is not within bounds: ";
+						for (int i = 0; i < notWithinBounds.size(); i++)
+						{
+							message += notWithinBounds.get(i);
+							if (i < notWithinBounds.size() - 1)
+							{
+								message += ", ";
+							}
+						}
+						errorLog.add(message);
+					}
+				}
+				else
+				{
+					message = "No data in the file to append to dataset";
+					errorLog.add(message);
+				}
+			}
+			catch (NumberFormatException e)
+			{
+				message = "The file does not contain only numbers";
+				errorLog.add(message);
+			}
 		}
 		return message;
 	}
 
 	/**
 	 * Retrieves the minimum grade in the dataset.
-	 * @return A float which indicates the minimum grade.
-	 * If the value returned is below the minValue then there is no data.
+	 * @return A string which indicates the minimum grade.
 	 */
 	public String getMin()
 	{
@@ -193,8 +267,7 @@ public class DataSet {
 
 	/**
 	 * Retrieves the maximum grade in the dataset.
-	 * @return A float which indicates the maximum grade.
-	 * If the value returned is above the maxValue then there is no data.
+	 * @return A string which indicates the maximum grade.
 	 */
 	public String getMax()
 	{
@@ -223,7 +296,7 @@ public class DataSet {
 	/**
 	 * Deletes the first instance of the entered grade.
 	 * @param gradeToDelete The grade to delete.
-	 * @return An int indicating the success of the function.
+	 * @return A string indicating the success of the function.
 	 */
 	public String deleteGrade(float gradeToDelete)
 	{
@@ -257,7 +330,7 @@ public class DataSet {
 	/**
 	 * Creates a distribution of the grades indicating the
 	 * average grade for every 10% bracket.
-	 * @return An array of floats indicating the average grade for
+	 * @return An array of strings indicating the average grade for
 	 * each bracket.
 	 */
 	public String[] createDistribution()
@@ -339,8 +412,8 @@ public class DataSet {
 	}
 
 	/**
-	 * Gets a count of how many grades fall within 10% bounds;
-	 * @return A an array of ints 
+	 * Gets a count of how many grades fall within 10% bounds.
+	 * @return A an array of ints for the counts in each range.
 	 */
 	public int[] getGraphCount()
 	{
@@ -415,7 +488,7 @@ public class DataSet {
 
 	/**
 	 * Gets the mean of the dataset.
-	 * @return A float indicating the mean.
+	 * @return A String indicating the mean.
 	 */
 	public String getMean()
 	{
@@ -440,7 +513,7 @@ public class DataSet {
 
 	/**
 	 * Gets the median of the dataset.
-	 * @return A float indicating the median.
+	 * @return A String indicating the median.
 	 */
 	public String getMedian()
 	{
@@ -459,7 +532,7 @@ public class DataSet {
 			{
 				median = data.get(data.size() / 2);
 			}
-			
+
 			message = "The median is: " + median;
 		}
 		else
@@ -472,7 +545,7 @@ public class DataSet {
 
 	/**
 	 * Gets the mode of the dataset.
-	 * @return A  arrayList of floats indicating the mode/s.
+	 * @return An arrayList of strings indicating the mode/s.
 	 */
 	public String getMode()
 	{
@@ -552,5 +625,95 @@ public class DataSet {
 	public String getLastError()
 	{
 		return errorLog.get(errorLog.size() - 1);
+	}
+
+	/**
+	 * Validates that a file name is a csv or a txt file.
+	 * @param fileName The name of the file to validate
+	 * @return An integer indicating the type
+	 * 0 - other
+	 * 1 - txt
+	 * 2 - csv
+	 */
+	private int validateName(String fileName)
+	{
+		int extension = 0;
+		int extensionPeriod = fileName.lastIndexOf(".");
+		if (extensionPeriod > 0)
+		{
+			String extensionString = fileName.substring(extensionPeriod);
+			if (extensionString.compareTo("txt") == 0)
+			{
+				extension = 1;
+			}
+			else if (extensionString.compareTo("csv") == 0)
+			{
+				extension = 2;
+			}
+		}
+		return extension;
+	}
+
+	/**
+	 * Reads in a txt file of data points.
+	 * @param fileToRead The name of the file to read in.
+	 * @return An ArrayList of floats from the file.
+	 */
+	private ArrayList<Float> readTxtFile(File fileToRead)
+	{
+		Scanner scan = null;
+		ArrayList<Float> toReturn = new ArrayList<Float>();
+		try
+		{
+			scan = new Scanner(fileToRead);
+			while (scan.hasNextLine())
+			{
+				toReturn.add(Float.parseFloat(scan.nextLine()));
+			}
+		}
+		catch (FileNotFoundException e)
+		{
+
+		}
+		finally
+		{
+			if (scan != null)
+			{
+				scan.close();
+			}
+		}
+		return toReturn;
+	}
+
+	/**
+	 * Reads in a csv file of data points.
+	 * @param fileToRead The name of the file to read in.
+	 * @return An ArrayList of floats from the file.
+	 */
+	private ArrayList<Float> readCsvFile(File fileToRead)
+	{
+		Scanner scan = null;
+		ArrayList<Float> toReturn = new ArrayList<Float>();
+		try
+		{
+			scan = new Scanner(fileToRead);
+			scan.useDelimiter(",");
+			while (scan.hasNextLine())
+			{
+				toReturn.add(Float.parseFloat(scan.next()));
+			}
+		}
+		catch (FileNotFoundException e)
+		{
+
+		}
+		finally
+		{
+			if (scan != null)
+			{
+				scan.close();
+			}
+		}
+		return toReturn;
 	}
 }
