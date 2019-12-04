@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 class DataSetTest {
@@ -476,8 +477,9 @@ class DataSetTest {
 		{
 			//Write Content
 			file.createNewFile();
-			FileWriter writer = new FileWriter(file);
-			writer.write("0,1,2,\n3,4");
+			PrintStream writer = new PrintStream(file);
+			writer.println("0,1,2,");
+			writer.println("3,4");
 			writer.close();
 		}
 		catch (IOException e) 

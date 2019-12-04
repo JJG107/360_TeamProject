@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class DataSet {
@@ -634,6 +636,54 @@ public class DataSet {
 	{
 		return errorLog.get(errorLog.size() - 1);
 	}
+	
+	/**
+	 * Generates a report of all of the data
+	 * @return A string indicating the success
+	 * of the function.
+	 */
+	public String generateReport()
+	{
+		String message;
+		File report = new File("report.txt");
+		if (data.size() == 0)
+		{
+			message = "There is no data to generate a report";
+		}
+		else
+		{
+			try
+			{
+				report.createNewFile();
+				PrintStream writer = new PrintStream(report);
+				String toAppend;
+				// Max
+				toAppend = getMaxBoundary();
+				writer.println(toAppend);
+				// Min
+				toAppend = getMinBoundary();
+				writer.println(toAppend);
+				
+				// The Dataset
+				
+				// Simple Stats
+				// Count, Max, Min, Mean, Median, Mode
+				
+				// Distribution
+				
+				// Error Log/Graph?
+				
+				message = "Report successfully written to \"report.txt\"";
+				writer.close();
+			}
+			catch (Exception e)
+			{
+				message = "An IO exception occurred";
+			}
+			
+		}
+		return message;
+	}
 
 	/**
 	 * Validates that a file name is a csv or a txt file.
@@ -743,5 +793,23 @@ public class DataSet {
 		}
 		data.removeAll(toRemove);
 		return removedEntries;
+	}
+	
+	/**
+	 * Retrieves the minimum boundary.
+	 * @return A string indicating the minimum boundary.
+	 */
+	private String getMinBoundary()
+	{
+		return "Minimum Boundary: " + minValue;
+	}
+	
+	/**
+	 * Retrieves the maximum boundary.
+	 * @return A string indicating the maximum boundary.
+	 */
+	private String getMaxBoundary()
+	{
+		return "Maximum Boundary: " + maxValue;
 	}
 }
