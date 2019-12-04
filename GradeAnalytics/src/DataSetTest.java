@@ -283,7 +283,6 @@ class DataSetTest {
 	}
 
 	// Create Section
-
 	/**
 	 * Tests creating a data set from a text file
 	 */
@@ -382,6 +381,9 @@ class DataSetTest {
 		assertEquals(result, "File does not exist");
 	}
 
+	/**
+	 * Tests creating a dataset that is out of bounds
+	 */
 	@Test
 	void CreateOutOfBounds()
 	{
@@ -429,6 +431,70 @@ class DataSetTest {
 		file.delete();
 	}
 
+	/**
+	 * Tests creating data and seeing if pre-existing
+	 * data is erased.
+	 */
+	@Test
+	void CreateWithExistingData()
+	{
+		DataSet testSet = new DataSet();
+		testSet.appendSingleValue(20);
+		File file = new File("TestFile.csv");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("0,1,2,3,4");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.createDataFromFile("TestFile.csv");
+		assertEquals(result, "Created Dataset");
+		assertEquals(testSet.getDataCount(), 5);
+		ArrayList<Float> testData = testSet.getData();
+		for (int i = 0; i < testData.size(); i++)
+		{
+			assertEquals(testData.get(i), i);
+		}
+		file.delete();
+	}
+	
+	/**
+	 * Tests reading in a multi-line csv
+	 */
+	@Test
+	void CreateWithMultlineCsv()
+	{
+		DataSet testSet = new DataSet();
+		File file = new File("TestFile.csv");
+		try 
+		{
+			//Write Content
+			file.createNewFile();
+			FileWriter writer = new FileWriter(file);
+			writer.write("0,1,2,\n3,4");
+			writer.close();
+		}
+		catch (IOException e) 
+		{
+			// Do nothing since it's a test
+		}
+		String result = testSet.createDataFromFile("TestFile.csv");
+		assertEquals(result, "Created Dataset");
+		assertEquals(testSet.getDataCount(), 5);
+		ArrayList<Float> testData = testSet.getData();
+		for (int i = 0; i < testData.size(); i++)
+		{
+			assertEquals(testData.get(i), i);
+		}
+		file.delete();
+	}
+	
 	// Append Section
 	/**
 	 * Tests appending from a txt file
