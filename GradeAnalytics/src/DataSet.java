@@ -663,12 +663,22 @@ public class DataSet {
 				// Min
 				toAppend = getMinBoundary();
 				writer.println(toAppend);
-				
 				// The Dataset
 				
 				// Simple Stats
 				// Count, Max, Min, Mean, Median, Mode
-				
+				toAppend = "Data Count: " + getDataCount();
+				writer.println(toAppend);
+				toAppend = "Max: " + getMax();
+				writer.println(toAppend);
+				toAppend = "Min: " + getMin();
+				writer.println(toAppend);
+				toAppend = getMean();
+				writer.println(toAppend);
+				toAppend = getMedian();				
+				writer.println(toAppend);
+				toAppend = getMode();				
+				writer.println(toAppend);
 				// Distribution
 				
 				// Error Log/Graph?
