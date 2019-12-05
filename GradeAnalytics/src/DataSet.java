@@ -657,13 +657,18 @@ public class DataSet {
 				report.createNewFile();
 				PrintStream writer = new PrintStream(report);
 				String toAppend;
+				
 				// Max
 				toAppend = getMaxBoundary();
 				writer.println(toAppend);
+				
 				// Min
 				toAppend = getMinBoundary();
 				writer.println(toAppend);
+				
 				// The Dataset
+				toAppend = getDataSetAsString();
+				writer.println(toAppend);
 				
 				// Simple Stats
 				// Count, Max, Min, Mean, Median, Mode
@@ -679,7 +684,23 @@ public class DataSet {
 				writer.println(toAppend);
 				toAppend = getMode();				
 				writer.println(toAppend);
+				
 				// Distribution
+				toAppend = "Distribution:\n";
+				writer.println(toAppend);
+				String[] distribution = createDistribution();
+
+				// Format the distribution as x% - y%: z
+				int min, max;
+				for (int i = 0; i < distribution.length; i++)
+				{
+					toAppend = "";
+					min = i * 10;
+					max = i * 10 + 10;
+					toAppend += min + "% - " + max + "%: ";
+					toAppend += distribution[i];
+					writer.println(toAppend);
+				}
 				
 				// Error Log/Graph?
 				
