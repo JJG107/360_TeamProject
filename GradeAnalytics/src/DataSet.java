@@ -694,6 +694,39 @@ public class DataSet {
 		}
 		return message;
 	}
+	
+	/**
+	 * Creates a string to represent the data in
+	 * four columns.
+	 * @return A string that represents the data in
+	 * four columns.
+	 */
+	public String getDataSetAsString()
+	{
+		String dataAsString = "";
+		ArrayList<Integer> sortedData = (ArrayList<Integer>) data.clone();
+		sortedData.sort(null);
+		int columnSize = sortedData.size() / 4; // Split into four columns
+		int itemsPrinted;
+		for (int i = 0; i < columnSize; i++)
+		{
+			itemsPrinted = 0;
+			for (int j = 0; j < sortedData.size(); j++)
+			{
+				if ((j % columnSize) == i)
+				{
+					itemsPrinted++;
+					dataAsString += sortedData.get(j);
+					if (itemsPrinted != 3)
+					{
+						dataAsString += "\t";
+					}
+				}
+			}
+			dataAsString += "\n";
+		}
+		return dataAsString;
+	}
 
 	/**
 	 * Validates that a file name is a csv or a txt file.
