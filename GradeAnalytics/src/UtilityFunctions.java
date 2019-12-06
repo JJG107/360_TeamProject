@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 /**
  * Contains a variety of utility functions.
@@ -40,5 +41,40 @@ public class UtilityFunctions {
 			repeated += toRepeat;
 		}
 		return repeated;
+	}
+	
+	/**
+	 * Check to see if a string can be converted to a float
+	 * @param toCheck The string to check
+	 * @return A boolean indicating if it can be converted
+	 */
+	public static boolean checkIfStringIsFloat(String toCheck)
+	{
+		boolean isFloat = false;
+		try
+		{
+			Float.parseFloat(toCheck);
+			isFloat = true;
+		}
+		catch (NumberFormatException e) {}
+		
+		return isFloat;
+	}
+	
+	/**
+	 * Transforms a list of strings into one string
+	 * separated by line breaks.
+	 * @param list The list to transform.
+	 * @return A string containing all of the
+	 * list's strings.
+	 */
+	public static String makeListOfStringsOneString(ArrayList<String> list)
+	{
+		String toReturn = "";
+		for (int i = 0; i < list.size(); i++)
+		{
+			toReturn += list.get(i) + "\n";
+		}
+		return toReturn;
 	}
 }

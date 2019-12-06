@@ -61,22 +61,31 @@ public class DataSet {
 	 * @param max The maximum grade allowed.
 	 * @return A string indicating whether boundaries were added with/without existing data being removed 
 	 */
-	public String setBoundaries(float min, float max)
+	public String setBoundaries(String min, String max)
 	{
-		String message = "Boundaries Set";
-		lowerBound = min;
-		upperBound = max;
-		
-		if(data.size() == 0)
+		String message = "The boundaries are not floats or ints";
+		if (UtilityFunctions.checkIfStringIsFloat(min) &&
+			UtilityFunctions.checkIfStringIsFloat(max))
 		{
-			minGrade = max;
-			maxGrade = min;
+			message = "Boundaries Set";
+			lowerBound = Float.parseFloat(min);
+			upperBound = Float.parseFloat(max);		
+	
+			if(data.size() == 0)
+			{
+				minGrade = upperBound;
+				maxGrade = lowerBound;
+			}
+			
+			int removed = removeOutOfBoundaryData();
+			if (removed > 0)
+			{
+				message = "Data points out of bounds, " + removed + " data points were deleted";
+				addError(message);
+			}
 		}
-		
-		int removed = removeOutOfBoundaryData();
-		if (removed > 0)
+		else
 		{
-			message = "Data points out of bounds, " + removed + " data points were deleted";
 			addError(message);
 		}
 		return message;
@@ -88,25 +97,34 @@ public class DataSet {
 	 * @param value The float to append to the dataset.
 	 * @return A string indicating whether the value falls within the boundaries.
 	 */
-	public String appendSingleValue(float value)
+	public String appendSingleValue(String stringValue)
 	{
 		String message;
-		if (value >= lowerBound && value <= upperBound)
+		if (UtilityFunctions.checkIfStringIsFloat(stringValue))
 		{
-			if(value < minGrade)
-				minGrade = value;
-			if(value > maxGrade)
-				maxGrade = value;
-			
-			data.add(value);
-			message = "Data value\"" + value + "\" added";
+			float value = Float.parseFloat(stringValue);
+			if (value >= lowerBound && value <= upperBound)
+			{
+				if(value < minGrade)
+					minGrade = value;
+				if(value > maxGrade)
+					maxGrade = value;
+				
+				data.add(value);
+				message = "Data value\"" + value + "\" added";
+			}
+			else
+			{
+				message = "The value\"" + value + "\" is not within the current bounds";
+				addError(message);
+
+			}
 		}
 		else
 		{
-			message = "The value\"" + value + "\" is not within the current bounds";
-			addError(message);
-
+			message = "The value \"" + stringValue + "\" is not a float or int";
 		}
+
 		return message;
 	}
 
@@ -345,31 +363,39 @@ public class DataSet {
 	 * @param gradeToDelete The grade to delete.
 	 * @return A string indicating the success of the function.
 	 */
-	public String deleteGrade(float gradeToDelete)
+	public String deleteGrade(String gradeToDelete)
 	{
 		String message;
-		if (data.size() > 0)
+		if (UtilityFunctions.checkIfStringIsFloat(gradeToDelete))
 		{
-			boolean found = false;
-			message = "That datapoint does not exist";
-			for (int i = 0; i < data.size(); i++)
+			float floatToDelete = Float.parseFloat(gradeToDelete);
+			if (data.size() > 0)
 			{
-				if (data.get(i) == gradeToDelete)
+				boolean found = false;
+				message = "That datapoint does not exist";
+				for (int i = 0; i < data.size(); i++)
 				{
-					found = true;
-					data.remove(i);
-					message = "Successfully removed";
+					if (data.get(i) == floatToDelete)
+					{
+						found = true;
+						data.remove(i);
+						message = "Successfully removed";
+					}
+				}
+				if (!found)
+				{	
+					addError(message);
 				}
 			}
-			if (!found)
-			{	
+			else
+			{
+				message = "No data in dataset to delete grade";
 				addError(message);
 			}
 		}
 		else
 		{
-			message = "No data in dataset to delete grade";
-			addError(message);
+			message = "The grade to delete \"" + "\" is not a float or int";
 		}
 		return message;
 	}

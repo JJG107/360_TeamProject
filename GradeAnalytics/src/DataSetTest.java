@@ -16,8 +16,8 @@ class DataSetTest {
 	void BasicConstruction() 
 	{
 		DataSet testSet = new DataSet();
-		testSet.setBoundaries(-100, 100);
-		String result = testSet.appendSingleValue(0);
+		testSet.setBoundaries("-100", "100");
+		String result = testSet.appendSingleValue("0");
 		assertEquals(result, "Data added");
 	}
 
@@ -28,13 +28,13 @@ class DataSetTest {
 	void gettingMinimum() 
 	{
 		DataSet testSet = new DataSet();
-		testSet.setBoundaries(-100, 100);
-		String result = testSet.appendSingleValue(-1);
+		testSet.setBoundaries("-100", "100");
+		String result = testSet.appendSingleValue("-1");
 		assertEquals(result, "Data added");
-		result = testSet.appendSingleValue(1);
+		result = testSet.appendSingleValue("1");
 		assertEquals(result, "Data added");
 		String min = testSet.getMin();
-		assertEquals(Float.parseFloat(min), -1);
+		assertEquals(Float.parseFloat(min), "-1");
 	}
 
 	/**
@@ -44,13 +44,13 @@ class DataSetTest {
 	void gettingMaximum() 
 	{
 		DataSet testSet = new DataSet();
-		testSet.setBoundaries(-100, 100);
-		String result = testSet.appendSingleValue(-1);
+		testSet.setBoundaries("-100", "100");
+		String result = testSet.appendSingleValue("-1");
 		assertEquals(result, "Data added");
-		result = testSet.appendSingleValue(1);
+		result = testSet.appendSingleValue("1");
 		assertEquals(result, "Data added");
 		String max = testSet.getMax();
-		assertEquals(Float.parseFloat(max), 1);
+		assertEquals(Float.parseFloat(max), "1");
 	}
 
 	/**
@@ -74,12 +74,12 @@ class DataSetTest {
 	void AppendOutOfBounds() 
 	{
 		DataSet testSet = new DataSet();
-		testSet.setBoundaries(-100, 100);
-		String result = testSet.appendSingleValue((float)-100.1);
+		testSet.setBoundaries("-100", "100");
+		String result = testSet.appendSingleValue("-100.1");
 		assertEquals(result, "Appended data not within bounds");
-		result = testSet.appendSingleValue((float)100.1);
+		result = testSet.appendSingleValue("100.1");
 		assertEquals(result, "Appended data not within bounds");
-		assertEquals(testSet.getErrorLog().size(), 2);
+		assertEquals(testSet.getErrorLog().size(), "2");
 	}
 
 	/**
@@ -89,10 +89,10 @@ class DataSetTest {
 	void AppendDataInBounds()
 	{
 		DataSet testSet = new DataSet();
-		testSet.setBoundaries(-100, 100);
-		String result = testSet.appendSingleValue((float)-100);
+		testSet.setBoundaries("-100", "100");
+		String result = testSet.appendSingleValue("-100");
 		assertEquals(result, "Data added");
-		result = testSet.appendSingleValue((float)100);
+		result = testSet.appendSingleValue("100");
 		assertEquals(result, "Data added");
 		assertEquals(testSet.getDataCount(), 2);
 	}
@@ -104,12 +104,12 @@ class DataSetTest {
 	void DeletingAGrade()
 	{
 		DataSet testSet = new DataSet();
-		String result = testSet.appendSingleValue((float)0);
+		String result = testSet.appendSingleValue("0");
 		assertEquals(result, "Data added");
-		result = testSet.appendSingleValue((float)100);
+		result = testSet.appendSingleValue("100");
 		assertEquals(result, "Data added");
 		assertEquals(testSet.getDataCount(), 2);
-		result = testSet.deleteGrade(100);
+		result = testSet.deleteGrade("100");
 		assertEquals(result, "Successfully removed");
 	}
 
@@ -120,7 +120,7 @@ class DataSetTest {
 	void DeletingNoData()
 	{
 		DataSet testSet = new DataSet();
-		String result = testSet.deleteGrade(-100);
+		String result = testSet.deleteGrade("-100");
 		assertEquals(result, "No data in dataset to delete grade");
 	}
 
@@ -131,14 +131,14 @@ class DataSetTest {
 	void DeletingAGradeDoesNotExist()
 	{
 		DataSet testSet = new DataSet();
-		String result = testSet.appendSingleValue((float)100);
+		String result = testSet.appendSingleValue("100");
 		assertEquals(result, "Data added");
-		result = testSet.appendSingleValue((float)100);
+		result = testSet.appendSingleValue("100");
 		assertEquals(result, "Data added");
-		assertEquals(testSet.getDataCount(), 2);
-		result = testSet.deleteGrade(-100);
+		assertEquals(testSet.getDataCount(), "2");
+		result = testSet.deleteGrade("-100");
 		assertEquals(result, "That datapoint does not exist");
-		assertEquals(testSet.getDataCount(), 2);
+		assertEquals(testSet.getDataCount(), "2");
 	}
 
 	/**
@@ -148,8 +148,8 @@ class DataSetTest {
 	void CreateDistribution()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue((float)50);
-		testSet.appendSingleValue((float)52);
+		testSet.appendSingleValue("50");
+		testSet.appendSingleValue("52");
 		assertEquals(testSet.getDataCount(), 2);
 		String[] distribution = testSet.createDistribution();
 		assertEquals(Float.parseFloat(distribution[5]), 51);
@@ -163,8 +163,8 @@ class DataSetTest {
 	void CreateGraphCount()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue((float)50);
-		testSet.appendSingleValue((float)52);
+		testSet.appendSingleValue("50");
+		testSet.appendSingleValue("52");
 		assertEquals(testSet.getDataCount(), 2);
 		int[] count = testSet.getGraphCount();
 		assertEquals(count[5], 2);
@@ -179,8 +179,8 @@ class DataSetTest {
 	{
 		float start = 0;
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue((float)50);
-		testSet.appendSingleValue((float)52);
+		testSet.appendSingleValue("50");
+		testSet.appendSingleValue("52");
 		assertEquals(testSet.getDataCount(), 2);
 		float[] ranges = testSet.getGraphRanges();
 		for (int i = 0; i < ranges.length; i++)
@@ -197,11 +197,11 @@ class DataSetTest {
 	void GetMean()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue((float)40);
-		testSet.appendSingleValue((float)45);
-		testSet.appendSingleValue((float)50);
-		testSet.appendSingleValue((float)55);
-		testSet.appendSingleValue((float)70);		
+		testSet.appendSingleValue("40");
+		testSet.appendSingleValue("45");
+		testSet.appendSingleValue("50");
+		testSet.appendSingleValue("55");
+		testSet.appendSingleValue("70");		
 		assertEquals(testSet.getMean(), "The mean is: 52.0");
 	}
 
@@ -222,11 +222,11 @@ class DataSetTest {
 	void GetMedian()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue((float)40);
-		testSet.appendSingleValue((float)45);
-		testSet.appendSingleValue((float)50);
-		testSet.appendSingleValue((float)55);
-		testSet.appendSingleValue((float)70);		
+		testSet.appendSingleValue("40");
+		testSet.appendSingleValue("45");
+		testSet.appendSingleValue("50");
+		testSet.appendSingleValue("55");
+		testSet.appendSingleValue("70");		
 		assertEquals(testSet.getMedian(), "The median is: 50.0");
 	}
 
@@ -247,12 +247,12 @@ class DataSetTest {
 	void GetMode()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue((float)40);
-		testSet.appendSingleValue((float)40);
-		testSet.appendSingleValue((float)45);
-		testSet.appendSingleValue((float)50);
-		testSet.appendSingleValue((float)55);
-		testSet.appendSingleValue((float)70);		
+		testSet.appendSingleValue("40");
+		testSet.appendSingleValue("40");
+		testSet.appendSingleValue("45");
+		testSet.appendSingleValue("50");
+		testSet.appendSingleValue("55");
+		testSet.appendSingleValue("70");		
 		assertEquals(testSet.getMode(), "The mode(s) are: 40.0");
 	}
 
@@ -263,13 +263,13 @@ class DataSetTest {
 	void GetModes()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue((float)40);
-		testSet.appendSingleValue((float)40);
-		testSet.appendSingleValue((float)45);
-		testSet.appendSingleValue((float)50);
-		testSet.appendSingleValue((float)55);
-		testSet.appendSingleValue((float)55);
-		testSet.appendSingleValue((float)70);		
+		testSet.appendSingleValue("40");
+		testSet.appendSingleValue("40");
+		testSet.appendSingleValue("45");
+		testSet.appendSingleValue("50");
+		testSet.appendSingleValue("55");
+		testSet.appendSingleValue("55");
+		testSet.appendSingleValue("70");		
 		assertEquals(testSet.getMode(), "The mode(s) are: 40.0, 55.0");
 	}
 
@@ -356,7 +356,7 @@ class DataSetTest {
 		File file = new File("TestFile.ppt");
 		try 
 		{
-			//Write Content
+			// Write Content
 			file.createNewFile();
 			FileWriter writer = new FileWriter(file);
 			writer.write("0,1,2,3,4");
@@ -440,7 +440,7 @@ class DataSetTest {
 	void CreateWithExistingData()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue(20);
+		testSet.appendSingleValue("20");
 		File file = new File("TestFile.csv");
 		try 
 		{
@@ -505,7 +505,7 @@ class DataSetTest {
 	void AppendFromTxtFile()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue(0);
+		testSet.appendSingleValue("0");
 		File file = new File("TestFile.txt");
 		try 
 		{
@@ -537,7 +537,7 @@ class DataSetTest {
 	void AppendFromCsvFile()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue(0);
+		testSet.appendSingleValue("0");
 		File file = new File("TestFile.csv");
 		try 
 		{
@@ -569,7 +569,7 @@ class DataSetTest {
 	void AppendFromBlankFile()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue(0);
+		testSet.appendSingleValue("0");
 		File file = new File("TestFile.csv");
 		try 
 		{
@@ -598,7 +598,7 @@ class DataSetTest {
 	void AppendFromInvalidFileType()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue(0);
+		testSet.appendSingleValue("0");
 		File file = new File("TestFile.ppt");
 		try 
 		{
@@ -625,7 +625,7 @@ class DataSetTest {
 	void AppendFromNonexistentFile()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue(0);
+		testSet.appendSingleValue("0");
 		String result = testSet.appendDataFromFile("TestFile.txt");
 		assertEquals(result, "File does not exist");
 		assertEquals(testSet.getDataCount(), 1);
@@ -639,7 +639,7 @@ class DataSetTest {
 	void AppendOutOfBoundsFromFile()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue(0);
+		testSet.appendSingleValue("0");
 		File file = new File("TestFile.txt");
 		try 
 		{
@@ -667,7 +667,7 @@ class DataSetTest {
 	void AppendNonNumbers()
 	{
 		DataSet testSet = new DataSet();
-		testSet.appendSingleValue(0);
+		testSet.appendSingleValue("0");
 		File file = new File("TestFile.txt");
 		try 
 		{
