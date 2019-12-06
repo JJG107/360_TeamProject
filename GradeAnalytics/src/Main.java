@@ -119,7 +119,7 @@ public class Main extends JFrame {
 		btnSetBounds.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String result = dataSet.setBoundaries(minBoundField.getText(), maxBoundField.getText());
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnSetBounds = new GridBagConstraints();
@@ -157,8 +157,8 @@ public class Main extends JFrame {
 		JButton btnAddGrade = new JButton("ADD GRADE");
 		btnAddGrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dataSet.appendSingleValue(enterGradeField.getText());
-				// TODO
+				String result = dataSet.appendSingleValue(enterGradeField.getText());
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnAddGrade = new GridBagConstraints();
@@ -189,7 +189,7 @@ public class Main extends JFrame {
 		btnDeleteGrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.deleteGrade(deleteGradeField.getText());
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnDeleteGrade = new GridBagConstraints();
@@ -232,7 +232,7 @@ public class Main extends JFrame {
 			    int returnVal = chooser.showOpenDialog(null);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
 			            result = chooser.getSelectedFile().getName();
-			            // TODO
+			            textArea.setText(result);
 			    }
 			}
 		});
@@ -255,7 +255,7 @@ public class Main extends JFrame {
 			    int returnVal = chooser.showOpenDialog(null);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
 			            result = chooser.getSelectedFile().getName();
-			            // TODO
+			            textArea.setText(result);
 			    }
 			}
 		});
@@ -296,7 +296,7 @@ public class Main extends JFrame {
 		btnCount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = "" + dataSet.getDataCount();
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnCount = new GridBagConstraints();
@@ -310,7 +310,7 @@ public class Main extends JFrame {
 		btnMean.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getMean();
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnMean = new GridBagConstraints();
@@ -324,7 +324,7 @@ public class Main extends JFrame {
 		btnMaxGrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getMax();
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnMaxGrade = new GridBagConstraints();
@@ -338,7 +338,7 @@ public class Main extends JFrame {
 		btnMedian.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getMedian();
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnMedian = new GridBagConstraints();
@@ -352,6 +352,7 @@ public class Main extends JFrame {
 		btnMinGrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getMin();
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnMinGrade = new GridBagConstraints();
@@ -365,6 +366,7 @@ public class Main extends JFrame {
 		btnMode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getMode();
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnMode = new GridBagConstraints();
@@ -409,7 +411,7 @@ public class Main extends JFrame {
 		btnDisplayErrors.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = UtilityFunctions.makeListOfStringsOneString(dataSet.getErrorLog());
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnDisplayErrors = new GridBagConstraints();
@@ -437,7 +439,7 @@ public class Main extends JFrame {
 		btnDisplayData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getDataSetAsString();
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnDisplayData = new GridBagConstraints();
