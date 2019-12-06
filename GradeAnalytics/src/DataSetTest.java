@@ -17,7 +17,7 @@ class DataSetTest {
 	{
 		DataSet testSet = new DataSet();
 		testSet.setBoundaries("-100", "100");
-		String result = testSet.appendSingleValue("0");
+		assertEquals(result, "Data value \"0.0\" added");
 		assertEquals(result, "Data added");
 	}
 
@@ -30,11 +30,11 @@ class DataSetTest {
 		DataSet testSet = new DataSet();
 		testSet.setBoundaries("-100", "100");
 		String result = testSet.appendSingleValue("-1");
-		assertEquals(result, "Data added");
+		assertEquals(result, "Data value \"-1.0\" added");
 		result = testSet.appendSingleValue("1");
-		assertEquals(result, "Data added");
+		assertEquals(result, "Data value \"1.0\" added");
 		String min = testSet.getMin();
-		assertEquals(Float.parseFloat(min), "-1");
+		assertEquals(min, "Min grade: -1.0");
 	}
 
 	/**
@@ -46,11 +46,11 @@ class DataSetTest {
 		DataSet testSet = new DataSet();
 		testSet.setBoundaries("-100", "100");
 		String result = testSet.appendSingleValue("-1");
-		assertEquals(result, "Data added");
+		assertEquals(result, "Data value \"-1.0\" added");
 		result = testSet.appendSingleValue("1");
-		assertEquals(result, "Data added");
+		assertEquals(result, "Data value \"1.0\" added");
 		String max = testSet.getMax();
-		assertEquals(Float.parseFloat(max), "1");
+		assertEquals(max, "Max grade: 1.0");
 	}
 
 	/**
@@ -62,8 +62,8 @@ class DataSetTest {
 		DataSet testSet = new DataSet();
 		String max = testSet.getMax();
 		String min = testSet.getMin();
-		assertEquals(min, "No data in dataset to get min");
-		assertEquals(max, "No data in dataset to get max");
+		assertEquals(min, "There is no data to retieve a min from");
+		assertEquals(max, "There is no data to retieve a max from");
 		assertEquals(testSet.getErrorLog().size(), 2);
 	}
 
@@ -76,10 +76,10 @@ class DataSetTest {
 		DataSet testSet = new DataSet();
 		testSet.setBoundaries("-100", "100");
 		String result = testSet.appendSingleValue("-100.1");
-		assertEquals(result, "Appended data not within bounds");
+		assertEquals(result, "The value \"-100.1\" is not within the current bounds");
 		result = testSet.appendSingleValue("100.1");
-		assertEquals(result, "Appended data not within bounds");
-		assertEquals(testSet.getErrorLog().size(), "2");
+		assertEquals(result, "The value \"100.1\" is not within the current bounds");
+		assertEquals(testSet.getErrorLog().size(), 2);
 	}
 
 	/**
@@ -91,9 +91,9 @@ class DataSetTest {
 		DataSet testSet = new DataSet();
 		testSet.setBoundaries("-100", "100");
 		String result = testSet.appendSingleValue("-100");
-		assertEquals(result, "Data added");
+		assertEquals(result, "Data value \"-100.0\" added");
 		result = testSet.appendSingleValue("100");
-		assertEquals(result, "Data added");
+		assertEquals(result, "Data value \"100.0\" added");
 		assertEquals(testSet.getDataCount(), 2);
 	}
 
@@ -105,9 +105,9 @@ class DataSetTest {
 	{
 		DataSet testSet = new DataSet();
 		String result = testSet.appendSingleValue("0");
-		assertEquals(result, "Data added");
-		result = testSet.appendSingleValue("100");
-		assertEquals(result, "Data added");
+		assertEquals(result, "Data value \"0.0\" added");
+		result = testSet.appendSingleValue(("100");
+		assertEquals(result, "Data value \"100.0\" added");
 		assertEquals(testSet.getDataCount(), 2);
 		result = testSet.deleteGrade("100");
 		assertEquals(result, "Successfully removed");
@@ -132,10 +132,10 @@ class DataSetTest {
 	{
 		DataSet testSet = new DataSet();
 		String result = testSet.appendSingleValue("100");
-		assertEquals(result, "Data added");
+		assertEquals(result, "Data value \"100.0\" added");
 		result = testSet.appendSingleValue("100");
-		assertEquals(result, "Data added");
-		assertEquals(testSet.getDataCount(), "2");
+		assertEquals(result, "Data value \"100.0\" added");
+		assertEquals(testSet.getDataCount(), 2);
 		result = testSet.deleteGrade("-100");
 		assertEquals(result, "That datapoint does not exist");
 		assertEquals(testSet.getDataCount(), "2");
@@ -280,7 +280,7 @@ class DataSetTest {
 	void GetModeNoData()
 	{
 		DataSet testSet = new DataSet();		
-		assertEquals(testSet.getMode(), "No data to get mode from");
+		assertEquals(testSet.getMode(), "No data in the dataset to get mode from");
 	}
 
 	// Create Section
@@ -305,7 +305,7 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.createDataFromFile("TestFile.txt");
-		assertEquals(result, "Created Dataset");
+		assertEquals(result, "Created new dataset from the file \"TestFile.txt\"");
 		assertEquals(testSet.getDataCount(), 5);
 		ArrayList<Float> testData = testSet.getData();
 		for (int i = 0; i < testData.size(); i++)
@@ -336,7 +336,7 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.createDataFromFile("TestFile.csv");
-		assertEquals(result, "Created Dataset");
+		assertEquals(result, "Created new dataset from the file \"TestFile.csv\"");
 		assertEquals(testSet.getDataCount(), 5);
 		ArrayList<Float> testData = testSet.getData();
 		for (int i = 0; i < testData.size(); i++)
@@ -367,7 +367,7 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.createDataFromFile("TestFile.ppt");
-		assertEquals(result, "File is not of type csv or txt");
+		assertEquals(result, "The file \"TestFile.ppt\" is not of type .csv or .txt");
 		file.delete();
 	}
 
@@ -379,7 +379,7 @@ class DataSetTest {
 	{
 		DataSet testSet = new DataSet();
 		String result = testSet.createDataFromFile("TestFile.txt");
-		assertEquals(result, "File does not exist");
+		assertEquals(result, "The file \"TestFile.txt\" does not exist");
 	}
 
 	/**
@@ -403,7 +403,8 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.createDataFromFile("TestFile.txt");
-		assertEquals(result, "The following data indexes are not within bounds: 0, 4");
+		assertEquals(result, "The following data indices are not within bounds: 0, 4\n" + 
+				"Please edit these values and try to load the file \"TestFile.txt\" again.");
 		file.delete();
 	}
 
@@ -428,7 +429,7 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.createDataFromFile("TestFile.txt");
-		assertEquals(result, "The file does not contain only numbers");
+		assertEquals(result, "The file \"TestFile.txt\" does not contain only numbers");
 		file.delete();
 	}
 
@@ -455,7 +456,7 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.createDataFromFile("TestFile.csv");
-		assertEquals(result, "Created Dataset");
+		assertEquals(result, "Created new dataset from the file \"TestFile.csv\"");
 		assertEquals(testSet.getDataCount(), 5);
 		ArrayList<Float> testData = testSet.getData();
 		for (int i = 0; i < testData.size(); i++)
@@ -487,7 +488,7 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.createDataFromFile("TestFile.csv");
-		assertEquals(result, "Created Dataset");
+		assertEquals(result, "Created new dataset from the file \"TestFile.csv\"");
 		assertEquals(testSet.getDataCount(), 5);
 		ArrayList<Float> testData = testSet.getData();
 		for (int i = 0; i < testData.size(); i++)
@@ -520,7 +521,7 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.appendDataFromFile("TestFile.txt");
-		assertEquals(result, "Appended To Dataset");
+		assertEquals(result, "Appended data from \"TestFile.txt\" to dataset");
 		assertEquals(testSet.getDataCount(), 6);
 		ArrayList<Float> testData = testSet.getData();
 		for (int i = 0; i < testData.size(); i++)
@@ -552,7 +553,7 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.appendDataFromFile("TestFile.csv");
-		assertEquals(result, "Appended To Dataset");
+		assertEquals(result, "Appended data from \"TestFile.csv\" to dataset");
 		assertEquals(testSet.getDataCount(), 6);
 		ArrayList<Float> testData = testSet.getData();
 		for (int i = 0; i < testData.size(); i++)
@@ -581,7 +582,7 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.appendDataFromFile("TestFile.csv");
-		assertEquals(result, "No data in the file to append to dataset");
+		assertEquals(result, "No data in the file \"TestFile.csv\" to append to dataset");
 		assertEquals(testSet.getDataCount(), 1);
 		ArrayList<Float> testData = testSet.getData();
 		for (int i = 0; i < testData.size(); i++)
@@ -613,7 +614,7 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.appendDataFromFile("TestFile.ppt");
-		assertEquals(result, "File is not of type csv or txt");
+		assertEquals(result, "The file \"TestFile.ppt\" is not of type .csv or .txt");
 		assertEquals(testSet.getDataCount(), 1);
 		file.delete();
 	}
@@ -627,7 +628,7 @@ class DataSetTest {
 		DataSet testSet = new DataSet();
 		testSet.appendSingleValue("0");
 		String result = testSet.appendDataFromFile("TestFile.txt");
-		assertEquals(result, "File does not exist");
+		assertEquals(result, "The file \"TestFile.txt\" does not exist");
 		assertEquals(testSet.getDataCount(), 1);
 	}
 	
@@ -654,7 +655,8 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.appendDataFromFile("TestFile.txt");
-		assertEquals(result, "The following data indexes are not within bounds: 0, 4");
+		assertEquals(result, "The following data indexes are not within bounds: 0, 4\n" + 
+				"Please edit these values and try to load the file \"TestFile.txt\" again.");
 		assertEquals(testSet.getDataCount(), 1);
 		file.delete();
 	}
@@ -682,7 +684,7 @@ class DataSetTest {
 			// Do nothing since it's a test
 		}
 		String result = testSet.appendDataFromFile("TestFile.txt");
-		assertEquals(result, "The file does not contain only numbers");
+		assertEquals(result, "The file \"TestFile.txt\" does not contain only numbers");
 		assertEquals(testSet.getDataCount(), 1);
 		file.delete();
 	}

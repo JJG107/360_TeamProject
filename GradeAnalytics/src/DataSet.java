@@ -149,7 +149,7 @@ public class DataSet {
 		}
 		else if (fileType == 0)
 		{
-			message = "The file\"" + fileName + "\" is not of type .csv or .txt";
+			message = "The file \"" + fileName + "\" is not of type .csv or .txt";
 			addError(message);
 		}
 		else
@@ -205,6 +205,8 @@ public class DataSet {
 								message += ", ";
 							}
 						}
+						message += "\nPlease edit these values and try to load the file \""
+									+ fileName + "\" again.";
 						addError(message);
 					}
 				}
@@ -239,12 +241,12 @@ public class DataSet {
 		int fileType = validateName(fileName);
 		if (!file.exists())
 		{
-			message = "The file\"" + fileName + "\"does not exist";
+			message = "The file \"" + fileName + "\" does not exist";
 			addError(message);
 		}
 		else if (fileType == 0)
 		{
-			message = "The file\"" + fileName + "\"is not of type .csv or .txt";
+			message = "The file \"" + fileName + "\" is not of type .csv or .txt";
 			addError(message);
 		}
 		else
@@ -300,19 +302,20 @@ public class DataSet {
 								message += ", ";
 							}
 						}
-						message += "\nPlease edit these values and try to load the file \"" + fileName + "\" again.";
+						message += "\nPlease edit these values and try to load the file \"" 
+									+ fileName + "\" again.";
 						addError(message);
 					}
 				}
 				else
 				{
-					message = "No data in the file\"" + fileName + "\"to append to dataset";
+					message = "No data in the file \"" + fileName + "\" to append to dataset";
 					addError(message);
 				}
 			}
 			catch (NumberFormatException e)
 			{
-				message = "The file\"" + fileName +  "\"does not contain only numbers";
+				message = "The file \"" + fileName +  "\" does not contain only numbers";
 				addError(message);
 			}
 		}
@@ -931,7 +934,7 @@ public class DataSet {
 	
 	/**
 	 * Removes data based on the changed bounds. Saves a separate error message for each data
-	 * point that was removed
+	 * point that was removed.
 	 * 
 	 * @return An int indicating how much data was deleted.
 	 */
