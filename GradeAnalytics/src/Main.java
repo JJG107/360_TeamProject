@@ -49,9 +49,8 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
-		
+		JTextArea textArea = new JTextArea();
 		DataSet dataSet = new DataSet();
-		
 		setTitle("Grade Analytics");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 925, 600);
@@ -452,7 +451,7 @@ public class Main extends JFrame {
 		messagePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		settingsPanel.add(messagePane);
 		
-		JTextArea textArea = new JTextArea();
+		// Text area declared at the top
 		textArea.setEditable(false);
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
