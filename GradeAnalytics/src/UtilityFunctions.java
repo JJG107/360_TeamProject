@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Contains a variety of utility functions.
  * @author Michael Cai
@@ -57,5 +59,22 @@ public class UtilityFunctions {
 		catch (NumberFormatException e) {}
 		
 		return isFloat;
+	}
+	
+	/**
+	 * Transforms a list of strings into one string
+	 * separated by line breaks.
+	 * @param list The list to transform.
+	 * @return A string containing all of the
+	 * list's strings.
+	 */
+	public static String makeListOfStringsOneString(ArrayList<String> list)
+	{
+		String toReturn = "";
+		for (int i = 0; i < list.size(); i++)
+		{
+			toReturn += list.get(i) + "\n";
+		}
+		return toReturn;
 	}
 }

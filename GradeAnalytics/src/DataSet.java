@@ -363,31 +363,39 @@ public class DataSet {
 	 * @param gradeToDelete The grade to delete.
 	 * @return A string indicating the success of the function.
 	 */
-	public String deleteGrade(float gradeToDelete)
+	public String deleteGrade(String gradeToDelete)
 	{
 		String message;
-		if (data.size() > 0)
+		if (UtilityFunctions.checkIfStringIsFloat(gradeToDelete))
 		{
-			boolean found = false;
-			message = "That datapoint does not exist";
-			for (int i = 0; i < data.size(); i++)
+			float floatToDelete = Float.parseFloat(gradeToDelete);
+			if (data.size() > 0)
 			{
-				if (data.get(i) == gradeToDelete)
+				boolean found = false;
+				message = "That datapoint does not exist";
+				for (int i = 0; i < data.size(); i++)
 				{
-					found = true;
-					data.remove(i);
-					message = "Successfully removed";
+					if (data.get(i) == floatToDelete)
+					{
+						found = true;
+						data.remove(i);
+						message = "Successfully removed";
+					}
+				}
+				if (!found)
+				{	
+					addError(message);
 				}
 			}
-			if (!found)
-			{	
+			else
+			{
+				message = "No data in dataset to delete grade";
 				addError(message);
 			}
 		}
 		else
 		{
-			message = "No data in dataset to delete grade";
-			addError(message);
+			message = "The grade to delete \"" + "\" is not a float or int";
 		}
 		return message;
 	}
