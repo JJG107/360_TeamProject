@@ -308,27 +308,16 @@ public class DataSet {
 	 */
 	public String getMin()
 	{
-		return "Min grade: " + minGrade;
-		/*String message;
-		float min;
-		if (data.size() > 0)
+		if (getDataCount() != 0)
 		{
-			min = data.get(0);
-			for (int i = 0; i < data.size(); i++)
-			{
-				if (data.get(i) < min)
-				{
-					min = data.get(i);
-				}
-			}
-			message = "" + min;
+			return "Min grade: " + minGrade;
 		}
 		else
 		{
-			message = "No data in dataset to get min";
-			addError(message);
+			String error = "There is no data to retieve a min from";
+			errorLog.add(error);
+			return error;
 		}
-		return message;*/
 	}
 
 	/**
@@ -338,29 +327,16 @@ public class DataSet {
 	 */
 	public String getMax()
 	{
-		
-		return "Max grade: " + maxGrade;
-		
-		/*String message;
-		float max;
-		if (data.size() > 0)
+		if (getDataCount() != 0)
 		{
-			max = data.get(0);
-			for (int i = 0; i < data.size(); i++)
-			{
-				if (data.get(i) > max)
-				{
-					max = data.get(i);
-				}
-			}
-			message = "" + max;
+			return "Max grade: " + maxGrade;
 		}
 		else
 		{
-			message = "No data in dataset to get max";
-			addError(message);
+			String error = "There is no data to retieve a max from";
+			errorLog.add(error);
+			return error;
 		}
-		return message;*/
 	}
 
 	/**
