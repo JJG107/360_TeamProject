@@ -701,8 +701,27 @@ public class DataSet {
 					writer.println(toAppend);
 				}
 				
-				// Error Log/Graph?
+				// Graph
+				int[] graphCounts = getGraphCount();
+				float[] graphRanges = getGraphRanges();
+				int biggestCount = UtilityFunctions.findHighestIntIndex(graphCounts);
+				int starsToDraw;
+				for (int i = 0; i < graphCounts.length; i++)
+				{
+					toAppend = "";
+					toAppend += graphRanges[i] + " - " + graphRanges[i+1] + "\t|";
+					starsToDraw = graphCounts[i] / biggestCount;
+					toAppend += UtilityFunctions.repeatStringNTimes("*", starsToDraw);
+					writer.println(toAppend);
+				}
 				
+				// Error Log
+				writer.println("\nError Log\n");
+				ArrayList<String> errors = getErrorLog();
+				for (int i = 0; i < errors.size(); i++)
+				{
+					writer.println(errors.get(i));
+				}
 				message = "Report successfully written to \"report.txt\"";
 				writer.close();
 			}
