@@ -42,7 +42,8 @@ public class DataSet {
 	/**
 	 * Sets the boundaries for the dataset.
 	 * @param min The minimum grade allowed.
-	 * @param max The maximum grade allowed. 
+	 * @param max The maximum grade allowed.
+	 * @return A string indicating whether boundaries were added with/without existing data being removed 
 	 */
 	public String setBoundaries(float min, float max)
 	{
@@ -52,7 +53,7 @@ public class DataSet {
 		int removed = removeOutOfBoundaryData();
 		if (removed > 0)
 		{
-			message = "Data points out of bounds, " + removed + " data points deleted";
+			message = "Data points out of bounds, " + removed + " data points were deleted";
 			addError(message);
 		}
 		return message;
@@ -69,11 +70,11 @@ public class DataSet {
 		if (value >= minValue && value <= maxValue)
 		{
 			data.add(value);
-			message = "Data added";
+			message = "Data value\"" + value + "\" added";
 		}
 		else
 		{
-			message = "Appended data not within bounds";
+			message = "The value\"" + value + "\" is not within the current bounds";
 			addError(message);
 
 		}
@@ -95,12 +96,12 @@ public class DataSet {
 		int fileType = validateName(fileName);
 		if (!file.exists())
 		{
-			message = "File does not exist";
+			message = "The file \"" + fileName + "\" does not exist";
 			addError(message);
 		}
 		else if (fileType == 0)
 		{
-			message = "File is not of type csv or txt";
+			message = "The file\"" + fileName + "\" is not of type .csv or .txt";
 			addError(message);
 		}
 		else
@@ -132,11 +133,11 @@ public class DataSet {
 					if (withinBounds)
 					{
 						data = newData;
-						message = "Created Dataset";
+						message = "Created new dataset from the file \"" + fileName + "\"";
 					}
 					else
 					{
-						message = "The following data indexes are not within bounds: ";
+						message = "The following data indices are not within bounds: ";
 						for (int i = 0; i < notWithinBounds.size(); i++)
 						{
 							message += notWithinBounds.get(i);
@@ -150,13 +151,13 @@ public class DataSet {
 				}
 				else
 				{
-					message = "No data in the file to create dataset";
+					message = "No data in the file \"" + fileName + "\" to create dataset";
 					addError(message);
 				}
 			}
 			catch (NumberFormatException e)
 			{
-				message = "The file does not contain only numbers";
+				message = "The file \"" + fileName + "\" does not contain only numbers";
 				addError(message);
 			}
 		}
@@ -178,12 +179,12 @@ public class DataSet {
 		int fileType = validateName(fileName);
 		if (!file.exists())
 		{
-			message = "File does not exist";
+			message = "The file\"" + fileName + "\"does not exist";
 			addError(message);
 		}
 		else if (fileType == 0)
 		{
-			message = "File is not of type csv or txt";
+			message = "The file\"" + fileName + "\"is not of type .csv or .txt";
 			addError(message);
 		}
 		else
@@ -215,7 +216,7 @@ public class DataSet {
 					if (withinBounds)
 					{
 						data.addAll(newData);
-						message = "Appended To Dataset";
+						message = "Appended data from \"" + fileName +  "\" to dataset";
 					}
 					else
 					{
@@ -228,18 +229,19 @@ public class DataSet {
 								message += ", ";
 							}
 						}
+						message += "\nPlease edit these values and try to load the file \"" + fileName + "\" again.";
 						addError(message);
 					}
 				}
 				else
 				{
-					message = "No data in the file to append to dataset";
+					message = "No data in the file\"" + fileName + "\"to append to dataset";
 					addError(message);
 				}
 			}
 			catch (NumberFormatException e)
 			{
-				message = "The file does not contain only numbers";
+				message = "The file\"" + fileName +  "\"does not contain only numbers";
 				addError(message);
 			}
 		}
@@ -421,7 +423,9 @@ public class DataSet {
 	}
 
 	/**
-	 * Gets a count of how many grades fall within 10% bounds.
+	 * Gets a count of how many grades fall within 10% bounds. This is used to determine 
+	 * the size of each bar in the graph.
+	 * 
 	 * @return A an array of ints for the counts in each range.
 	 */
 	public int[] getGraphCount()
@@ -479,7 +483,8 @@ public class DataSet {
 	}
 
 	/**
-	 * Gets the ranges for the graph.
+	 * Calculates boundaries for each 10% bar in the graph.
+	 * 
 	 * @return An array of floats which indicate the 10% bounds.
 	 */
 	public float[] getGraphRanges()
@@ -496,7 +501,7 @@ public class DataSet {
 	}
 
 	/**
-	 * Gets the mean of the dataset.
+	 * Computes the mean of the dataset.
 	 * @return A String indicating the mean.
 	 */
 	public String getMean()
@@ -521,7 +526,8 @@ public class DataSet {
 	}
 
 	/**
-	 * Gets the median of the dataset.
+	 * Computes the median of the dataset.
+	 * 
 	 * @return A String indicating the median.
 	 */
 	public String getMedian()
@@ -553,8 +559,9 @@ public class DataSet {
 	}
 
 	/**
-	 * Gets the mode of the dataset.
-	 * @return An arrayList of strings indicating the mode/s.
+	 * Computes the mode(s) of the dataset.
+	 * 
+	 * @return An arrayList of strings indicating the mode(s).
 	 */
 	public String getMode()
 	{
@@ -601,7 +608,7 @@ public class DataSet {
 		}
 		else
 		{
-			message = "No data to get mode from";
+			message = "No data in the dataset to get mode from";
 			addError(message);
 		}
 
@@ -610,6 +617,7 @@ public class DataSet {
 
 	/**
 	 * Adds an error to the error log.
+	 * 
 	 * @param error The error to add to the log.
 	 */
 	public void addError(String error)
@@ -619,6 +627,7 @@ public class DataSet {
 
 	/**
 	 * Retrieves the error log.
+	 * 
 	 * @return An ArrayList of all errors.
 	 */
 	public ArrayList<String> getErrorLog()
@@ -628,6 +637,7 @@ public class DataSet {
 
 	/**
 	 * Retrieves the last error in the error log.
+	 * 
 	 * @return A string indicating the last error.
 	 */
 	public String getLastError()
@@ -636,12 +646,13 @@ public class DataSet {
 	}
 
 	/**
-	 * Validates that a file name is a csv or a txt file.
+	 * Validates that a selected file name is a csv or a txt file.
+	 * 
 	 * @param fileName The name of the file to validate
 	 * @return An integer indicating the type
-	 * 0 - other
-	 * 1 - txt
-	 * 2 - csv
+	 * (0 - other)
+	 * (1 - txt)
+	 * (2 - csv)
 	 */
 	private int validateName(String fileName)
 	{
@@ -663,7 +674,8 @@ public class DataSet {
 	}
 
 	/**
-	 * Reads in a txt file of data points.
+	 * Reads in a .txt file of data points.
+	 * 
 	 * @param fileToRead The name of the file to read in.
 	 * @return An ArrayList of floats from the file.
 	 */
@@ -679,10 +691,7 @@ public class DataSet {
 				toReturn.add(Float.parseFloat(scan.nextLine()));
 			}
 		}
-		catch (FileNotFoundException e)
-		{
-
-		}
+		catch (FileNotFoundException e){}
 		finally
 		{
 			if (scan != null)
@@ -694,7 +703,8 @@ public class DataSet {
 	}
 
 	/**
-	 * Reads in a csv file of data points.
+	 * Reads in a .csv file of data points.
+	 * 
 	 * @param fileToRead The name of the file to read in.
 	 * @return An ArrayList of floats from the file.
 	 */
@@ -711,10 +721,7 @@ public class DataSet {
 				toReturn.add(Float.parseFloat(scan.next()));
 			}
 		}
-		catch (FileNotFoundException e)
-		{
-
-		}
+		catch (FileNotFoundException e) {}
 		finally
 		{
 			if (scan != null)
@@ -726,12 +733,16 @@ public class DataSet {
 	}
 	
 	/**
-	 * Removes data based on the changed bounds.
+	 * Removes data based on the changed bounds. Saves a separate error message for each data
+	 * point that was removed
+	 * 
 	 * @return An int indicating how much data was deleted.
 	 */
 	private int removeOutOfBoundaryData()
 	{
 		int removedEntries = 0;
+		String message;
+		
 		ArrayList<Float> toRemove = new ArrayList<Float>();
 		for (int i = 0; i < data.size(); i++)
 		{
@@ -739,6 +750,10 @@ public class DataSet {
 			{
 				toRemove.add(data.get(i));
 				removedEntries++;
+				
+				message = "The grade value\"" + data.get(i) + "\" is not within the new bounds, " +
+						" it will be removed from the current dataset";
+				addError(message);
 			}
 		}
 		data.removeAll(toRemove);
