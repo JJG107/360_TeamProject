@@ -1,4 +1,3 @@
-
 /**
  * Contains a variety of utility functions.
  * @author Michael Cai
@@ -40,5 +39,23 @@ public class UtilityFunctions {
 			repeated += toRepeat;
 		}
 		return repeated;
+	}
+	
+	/**
+	 * Check to see if a string can be converted to a float
+	 * @param toCheck The string to check
+	 * @return A boolean indicating if it can be converted
+	 */
+	public static boolean checkIfStringIsFloat(String toCheck)
+	{
+		boolean isFloat = false;
+		try
+		{
+			Float.parseFloat(toCheck);
+			isFloat = true;
+		}
+		catch (NumberFormatException e) {}
+		
+		return isFloat;
 	}
 }

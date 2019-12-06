@@ -16,8 +16,8 @@ class DataSetTest {
 	void BasicConstruction() 
 	{
 		DataSet testSet = new DataSet();
-		testSet.setBoundaries(-100, 100);
-		String result = testSet.appendSingleValue(0);
+		testSet.setBoundaries("-100", "100");
+		String result = testSet.appendSingleValue("0");
 		assertEquals(result, "Data added");
 	}
 
@@ -28,13 +28,13 @@ class DataSetTest {
 	void gettingMinimum() 
 	{
 		DataSet testSet = new DataSet();
-		testSet.setBoundaries(-100, 100);
-		String result = testSet.appendSingleValue(-1);
+		testSet.setBoundaries("-100", "100");
+		String result = testSet.appendSingleValue("-1");
 		assertEquals(result, "Data added");
-		result = testSet.appendSingleValue(1);
+		result = testSet.appendSingleValue("1");
 		assertEquals(result, "Data added");
 		String min = testSet.getMin();
-		assertEquals(Float.parseFloat(min), -1);
+		assertEquals(Float.parseFloat(min), "-1");
 	}
 
 	/**
@@ -44,13 +44,13 @@ class DataSetTest {
 	void gettingMaximum() 
 	{
 		DataSet testSet = new DataSet();
-		testSet.setBoundaries(-100, 100);
-		String result = testSet.appendSingleValue(-1);
+		testSet.setBoundaries("-100", "100");
+		String result = testSet.appendSingleValue("-1");
 		assertEquals(result, "Data added");
-		result = testSet.appendSingleValue(1);
+		result = testSet.appendSingleValue("1");
 		assertEquals(result, "Data added");
 		String max = testSet.getMax();
-		assertEquals(Float.parseFloat(max), 1);
+		assertEquals(Float.parseFloat(max), "1");
 	}
 
 	/**
@@ -74,12 +74,12 @@ class DataSetTest {
 	void AppendOutOfBounds() 
 	{
 		DataSet testSet = new DataSet();
-		testSet.setBoundaries(-100, 100);
-		String result = testSet.appendSingleValue((float)-100.1);
+		testSet.setBoundaries("-100", "100");
+		String result = testSet.appendSingleValue("-100.1");
 		assertEquals(result, "Appended data not within bounds");
-		result = testSet.appendSingleValue((float)100.1);
+		result = testSet.appendSingleValue("100.1");
 		assertEquals(result, "Appended data not within bounds");
-		assertEquals(testSet.getErrorLog().size(), 2);
+		assertEquals(testSet.getErrorLog().size(), "2");
 	}
 
 	/**
@@ -89,10 +89,10 @@ class DataSetTest {
 	void AppendDataInBounds()
 	{
 		DataSet testSet = new DataSet();
-		testSet.setBoundaries(-100, 100);
-		String result = testSet.appendSingleValue((float)-100);
+		testSet.setBoundaries("-100", "100");
+		String result = testSet.appendSingleValue(("-100");
 		assertEquals(result, "Data added");
-		result = testSet.appendSingleValue((float)100);
+		result = testSet.appendSingleValue("100");
 		assertEquals(result, "Data added");
 		assertEquals(testSet.getDataCount(), 2);
 	}
@@ -104,9 +104,9 @@ class DataSetTest {
 	void DeletingAGrade()
 	{
 		DataSet testSet = new DataSet();
-		String result = testSet.appendSingleValue((float)0);
+		String result = testSet.appendSingleValue("0");
 		assertEquals(result, "Data added");
-		result = testSet.appendSingleValue((float)100);
+		result = testSet.appendSingleValue("100");
 		assertEquals(result, "Data added");
 		assertEquals(testSet.getDataCount(), 2);
 		result = testSet.deleteGrade(100);
@@ -356,7 +356,7 @@ class DataSetTest {
 		File file = new File("TestFile.ppt");
 		try 
 		{
-			//Write Content
+			// Write Content
 			file.createNewFile();
 			FileWriter writer = new FileWriter(file);
 			writer.write("0,1,2,3,4");
