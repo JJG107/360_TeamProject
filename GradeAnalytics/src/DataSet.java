@@ -4,11 +4,21 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Michael, Greyson, James, Priya
+ * 
+ * This class represents a data set. It contains methods for the manipulation of data sets,
+ * including loading data from files, entering data from the keyboard, calculating data metrics,
+ * and producing graphs/reports based on data.
+ */
 public class DataSet {
 
 	private ArrayList<Float> data;
-	private float minValue;
-	private float maxValue;
+	private float lowerBound;
+	private float upperBound;
+	private float minGrade;
+	private float maxGrade;
 	private ArrayList<String> errorLog;
 
 	/**
@@ -18,12 +28,15 @@ public class DataSet {
 	{
 		data = new ArrayList<Float>();
 		errorLog = new ArrayList<String>();
-		minValue = 0;
-		maxValue = 100;
+		lowerBound = 0;
+		upperBound = 100;
+		minGrade = 100;
+		maxGrade = 0;
 	}
 
 	/**
 	 * Returns the entire dataset.
+	 * 
 	 * @return An ArrayList of floats containing the dataset.
 	 */
 	public ArrayList<Float> getData()
@@ -33,6 +46,7 @@ public class DataSet {
 
 	/**
 	 * Gets the count of how many data points there are.
+	 * 
 	 * @return An indicating the count.
 	 */
 	public int getDataCount()
@@ -42,6 +56,7 @@ public class DataSet {
 
 	/**
 	 * Sets the boundaries for the dataset.
+	 * 
 	 * @param min The minimum grade allowed.
 	 * @param max The maximum grade allowed.
 	 * @return A string indicating whether boundaries were added with/without existing data being removed 
@@ -49,8 +64,15 @@ public class DataSet {
 	public String setBoundaries(float min, float max)
 	{
 		String message = "Boundaries Set";
-		minValue = min;
-		maxValue = max;
+		lowerBound = min;
+		upperBound = max;
+		
+		if(data.size() == 0)
+		{
+			minGrade = max;
+			maxGrade = min;
+		}
+		
 		int removed = removeOutOfBoundaryData();
 		if (removed > 0)
 		{
@@ -62,14 +84,20 @@ public class DataSet {
 
 	/**
 	 * Appends a single float to the dataset.
+	 * 
 	 * @param value The float to append to the dataset.
 	 * @return A string indicating whether the value falls within the boundaries.
 	 */
 	public String appendSingleValue(float value)
 	{
 		String message;
-		if (value >= minValue && value <= maxValue)
+		if (value >= lowerBound && value <= upperBound)
 		{
+			if(value < minGrade)
+				minGrade = value;
+			if(value > maxGrade)
+				maxGrade = value;
+			
 			data.add(value);
 			message = "Data value\"" + value + "\" added";
 		}
@@ -84,6 +112,7 @@ public class DataSet {
 
 	/**
 	 * Creates a new dataset with the passed value.
+	 * 
 	 * @param fileName The name of the file to load.
 	 * @return A string indicating the success of the function.
 	 */
@@ -121,15 +150,23 @@ public class DataSet {
 				// Validate the read in file
 				if (newData.size() > 0)
 				{
+					float currentMax = maxGrade;
+					float currentMin = minGrade;
+					
 					boolean withinBounds = true;
 					ArrayList<Integer> notWithinBounds = new ArrayList<Integer>();
 					for (int i = 0; i < newData.size(); i++)
 					{
-						if ((newData.get(i) < minValue) || (newData.get(i) > maxValue))
+						if ((newData.get(i) < lowerBound) || (newData.get(i) > upperBound))
 						{
 							withinBounds = false;
 							notWithinBounds.add(i);
 						}
+						
+						if(newData.get(i) < minGrade)
+							minGrade = newData.get(i);
+						if(newData.get(i) > maxGrade)
+							maxGrade = newData.get(i);
 					}
 					if (withinBounds)
 					{
@@ -138,6 +175,9 @@ public class DataSet {
 					}
 					else
 					{
+						maxGrade = currentMax;
+						minGrade = currentMin;
+						
 						message = "The following data indices are not within bounds: ";
 						for (int i = 0; i < notWithinBounds.size(); i++)
 						{
@@ -167,6 +207,7 @@ public class DataSet {
 
 	/**
 	 * Appends data to the current dataset from an ArrayList.
+	 * 
 	 * @param fileName The name of the file to load.
 	 * @return A string that indicates the success of the function.
 	 */
@@ -204,15 +245,23 @@ public class DataSet {
 				// Validate the read in file
 				if (newData.size() > 0)
 				{
+					float currentMin = minGrade;
+					float currentMax = maxGrade;
+					
 					boolean withinBounds = true;
 					ArrayList<Integer> notWithinBounds = new ArrayList<Integer>();
 					for (int i = 0; i < newData.size(); i++)
 					{
-						if ((newData.get(i) < minValue) || (newData.get(i) > maxValue))
+						if ((newData.get(i) < lowerBound) || (newData.get(i) > upperBound))
 						{
 							withinBounds = false;
 							notWithinBounds.add(i);
 						}
+						
+						if(newData.get(i) < minGrade)
+							minGrade = newData.get(i);
+						if(newData.get(i) > maxGrade)
+							maxGrade = newData.get(i);
 					}
 					if (withinBounds)
 					{
@@ -221,6 +270,9 @@ public class DataSet {
 					}
 					else
 					{
+						maxGrade = currentMax;
+						minGrade = currentMin;
+						
 						message = "The following data indexes are not within bounds: ";
 						for (int i = 0; i < notWithinBounds.size(); i++)
 						{
@@ -251,62 +303,45 @@ public class DataSet {
 
 	/**
 	 * Retrieves the minimum grade in the dataset.
+	 * 
 	 * @return A string which indicates the minimum grade.
 	 */
 	public String getMin()
 	{
-		String message;
-		float min;
-		if (data.size() > 0)
+		if (getDataCount() != 0)
 		{
-			min = data.get(0);
-			for (int i = 0; i < data.size(); i++)
-			{
-				if (data.get(i) < min)
-				{
-					min = data.get(i);
-				}
-			}
-			message = "" + min;
+			return "Min grade: " + minGrade;
 		}
 		else
 		{
-			message = "No data in dataset to get min";
-			addError(message);
+			String error = "There is no data to retieve a min from";
+			errorLog.add(error);
+			return error;
 		}
-		return message;
 	}
 
 	/**
 	 * Retrieves the maximum grade in the dataset.
+	 * 
 	 * @return A string which indicates the maximum grade.
 	 */
 	public String getMax()
 	{
-		String message;
-		float max;
-		if (data.size() > 0)
+		if (getDataCount() != 0)
 		{
-			max = data.get(0);
-			for (int i = 0; i < data.size(); i++)
-			{
-				if (data.get(i) > max)
-				{
-					max = data.get(i);
-				}
-			}
-			message = "" + max;
+			return "Max grade: " + maxGrade;
 		}
 		else
 		{
-			message = "No data in dataset to get max";
-			addError(message);
+			String error = "There is no data to retieve a max from";
+			errorLog.add(error);
+			return error;
 		}
-		return message;
 	}
 
 	/**
 	 * Deletes the first instance of the entered grade.
+	 * 
 	 * @param gradeToDelete The grade to delete.
 	 * @return A string indicating the success of the function.
 	 */
@@ -342,6 +377,7 @@ public class DataSet {
 	/**
 	 * Creates a distribution of the grades indicating the
 	 * average grade for every 10% bracket.
+	 * 
 	 * @return An array of strings indicating the average grade for
 	 * each bracket.
 	 */
@@ -350,12 +386,12 @@ public class DataSet {
 		String[] toReturn = new String[10];
 		float[] distribution = new float[10];
 		int[] count = new int[10];
-		float totalRange = maxValue - minValue;
+		float totalRange = upperBound - lowerBound;
 		// Determine what falls within what range
 		for (int i = 0; i < data.size(); i++)
 		{
 			float rawValue = data.get(i);
-			float percent = (rawValue - minValue) / totalRange;
+			float percent = (rawValue - lowerBound) / totalRange;
 			if (percent >= .9)
 			{
 				distribution[9] += rawValue;
@@ -432,12 +468,12 @@ public class DataSet {
 	public int[] getGraphCount()
 	{
 		int[] count = new int[10];
-		float totalRange = maxValue - minValue;
+		float totalRange = upperBound - lowerBound;
 		// Determine what falls within what range
 		for (int i = 0; i < data.size(); i++)
 		{
 			float rawValue = data.get(i);
-			float percent = (rawValue - minValue) / totalRange;
+			float percent = (rawValue - lowerBound) / totalRange;
 			if (percent >= .9)
 			{
 				count[9]++;
@@ -491,18 +527,19 @@ public class DataSet {
 	public float[] getGraphRanges()
 	{
 		float[] ranges = new float[11];
-		float totalRange = maxValue - minValue;
+		float totalRange = upperBound - lowerBound;
 		float shortRange = totalRange / 10;
 		// The ranges of each percentage
 		for(int i = 0; i < 11; i++)
 		{
-			ranges[i] = minValue + shortRange * i;
+			ranges[i] = lowerBound + shortRange * i;
 		}
 		return ranges;
 	}
 
 	/**
 	 * Computes the mean of the dataset.
+	 * 
 	 * @return A String indicating the mean.
 	 */
 	public String getMean()
@@ -648,6 +685,7 @@ public class DataSet {
 	
 	/**
 	 * Generates a report of all of the data
+	 * 
 	 * @return A string indicating the success
 	 * of the function.
 	 */
@@ -683,9 +721,9 @@ public class DataSet {
 				// Count, Max, Min, Mean, Median, Mode
 				toAppend = "Data Count: " + getDataCount();
 				writer.println(toAppend);
-				toAppend = "Max: " + getMax();
+				toAppend = "Max: " + maxGrade;
 				writer.println(toAppend);
-				toAppend = "Min: " + getMin();
+				toAppend = "Min: " + minGrade;
 				writer.println(toAppend);
 				toAppend = getMean();
 				writer.println(toAppend);
@@ -747,6 +785,7 @@ public class DataSet {
 	/**
 	 * Creates a string to represent the data in
 	 * four columns.
+	 * 
 	 * @return A string that represents the data in
 	 * four columns.
 	 */
@@ -778,7 +817,7 @@ public class DataSet {
 	}
 
 	/**
-	 * Validates that a selected file name is a csv or a txt file.
+	 * Validates that a selected file name is a .csv or a .txt file.
 	 * 
 	 * @param fileName The name of the file to validate
 	 * @return An integer indicating the type
@@ -878,7 +917,7 @@ public class DataSet {
 		ArrayList<Float> toRemove = new ArrayList<Float>();
 		for (int i = 0; i < data.size(); i++)
 		{
-			if ((data.get(i) < minValue) || (data.get(i) > maxValue))
+			if ((data.get(i) < lowerBound) || (data.get(i) > upperBound))
 			{
 				toRemove.add(data.get(i));
 				removedEntries++;
@@ -894,19 +933,21 @@ public class DataSet {
 	
 	/**
 	 * Retrieves the minimum boundary.
+	 * 
 	 * @return A string indicating the minimum boundary.
 	 */
 	private String getMinBoundary()
 	{
-		return "Minimum Boundary: " + minValue;
+		return "Minimum Boundary: " + lowerBound;
 	}
 	
 	/**
 	 * Retrieves the maximum boundary.
+	 * 
 	 * @return A string indicating the maximum boundary.
 	 */
 	private String getMaxBoundary()
 	{
-		return "Maximum Boundary: " + maxValue;
+		return "Maximum Boundary: " + upperBound;
 	}
 }
