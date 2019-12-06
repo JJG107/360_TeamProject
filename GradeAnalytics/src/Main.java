@@ -3,8 +3,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 import java.awt.GridLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -221,7 +225,16 @@ public class Main extends JFrame {
 		JButton btnLoadFile = new JButton("LOAD FILE");
 		btnLoadFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				String result;
+			    JFileChooser chooser = new JFileChooser();
+			    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			        "TXT & CSV Files", "txt", "csv");
+			    chooser.setFileFilter(filter);
+			    int returnVal = chooser.showOpenDialog(null);
+			    if(returnVal == JFileChooser.APPROVE_OPTION) {
+			            result = chooser.getSelectedFile().getName();
+			            // TODO
+			    }
 			}
 		});
 		GridBagConstraints gbc_btnLoadFile = new GridBagConstraints();
@@ -235,6 +248,16 @@ public class Main extends JFrame {
 		JButton btnAppendFile = new JButton("APPEND FILE");
 		btnAppendFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String result;
+			    JFileChooser chooser = new JFileChooser();
+			    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			        "TXT & CSV Files", "txt", "csv");
+			    chooser.setFileFilter(filter);
+			    int returnVal = chooser.showOpenDialog(null);
+			    if(returnVal == JFileChooser.APPROVE_OPTION) {
+			            result = chooser.getSelectedFile().getName();
+			            // TODO
+			    }
 			}
 		});
 		GridBagConstraints gbc_btnAppendFile = new GridBagConstraints();
