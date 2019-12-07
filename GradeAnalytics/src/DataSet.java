@@ -850,21 +850,14 @@ public class DataSet {
 			columnSize = sortedData.size() / 4 + 1;
 		else
 			columnSize = sortedData.size() / 4;
-		
-		int itemsPrinted;
 		for (int i = 0; i < columnSize; i++)
 		{
-			itemsPrinted = 0;
 			for (int j = 0; j < sortedData.size(); j++)
 			{
 				if ((j % columnSize) == i)
 				{
-					itemsPrinted++;
 					dataAsString += sortedData.get(j);
-					if (itemsPrinted != 4)
-					{
-						dataAsString += "\t";
-					}
+					dataAsString += " |\t";
 				}
 			}
 			dataAsString += "\n";
