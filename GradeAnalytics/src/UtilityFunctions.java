@@ -1,5 +1,6 @@
 import java.text.DecimalFormat;
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -13,8 +14,31 @@ public class UtilityFunctions {
 	int maxX = 30;
 	String returned = "";
 
-	public String makeGraph(int counts[], int ranges[]) {
-		System.out.println("Each X represents 10 students.");
+	public static String makeGraph(int graphCounts[], float graphRanges[]) {
+		
+		String toAppend = "";
+        // Graph
+        String pattern = "0.0";
+        DecimalFormat decimalFormat = new DecimalFormat(pattern);
+        
+
+        int biggestCount = UtilityFunctions.findHighestIntIndex(graphCounts);
+        int starsToDraw;
+        for (int i = 0; i < graphCounts.length; i++)
+        {
+            toAppend += decimalFormat.format(graphRanges[i])
+                    + " - " + decimalFormat.format(graphRanges[i+1]) + "\t|";
+            starsToDraw = (int)((double)graphCounts[i] / biggestCount * 100);
+            toAppend += UtilityFunctions.repeatStringNTimes("X", starsToDraw)
+                        + " (" + graphCounts[i] + ")";
+            
+            toAppend += "\n";
+        }
+        
+        return toAppend;
+        
+        
+		/*System.out.println("Each X represents 10 students.");
 		System.out.println("----------------------------------------------------");
 		
 		//distribution1
@@ -97,7 +121,7 @@ public class UtilityFunctions {
 			returned += ranges[10] + '\n';
 		}
 		returned += "\n\nGrade Analytics Bar Chart" + '\n';
-		return returned;
+		return returned;*/
 	 }
 	
 	/**
