@@ -16,9 +16,8 @@ class DataSetTest {
 	void BasicConstruction() 
 	{
 		DataSet testSet = new DataSet();
-		testSet.setBoundaries("-100", "100");
-		assertEquals(result, "Data value \"0.0\" added");
-		assertEquals(result, "Data added");
+		String result = testSet.setBoundaries("-100", "100");
+		assertEquals(result, "Boundaries Set");
 	}
 
 	/**
@@ -106,7 +105,7 @@ class DataSetTest {
 		DataSet testSet = new DataSet();
 		String result = testSet.appendSingleValue("0");
 		assertEquals(result, "Data value \"0.0\" added");
-		result = testSet.appendSingleValue(("100");
+		result = testSet.appendSingleValue("100");
 		assertEquals(result, "Data value \"100.0\" added");
 		assertEquals(testSet.getDataCount(), 2);
 		result = testSet.deleteGrade("100");
@@ -138,7 +137,7 @@ class DataSetTest {
 		assertEquals(testSet.getDataCount(), 2);
 		result = testSet.deleteGrade("-100");
 		assertEquals(result, "That datapoint does not exist");
-		assertEquals(testSet.getDataCount(), "2");
+		assertEquals(testSet.getDataCount(), 2);
 	}
 
 	/**

@@ -111,11 +111,11 @@ public class DataSet {
 					maxGrade = value;
 				
 				data.add(value);
-				message = "Data value\"" + value + "\" added";
+				message = "Data value \"" + value + "\" added";
 			}
 			else
 			{
-				message = "The value\"" + value + "\" is not within the current bounds";
+				message = "The value \"" + value + "\" is not within the current bounds";
 				addError(message);
 
 			}
