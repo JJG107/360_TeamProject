@@ -380,9 +380,9 @@ public class Main extends JFrame {
 		uaWrapper.add(utilitiesPanel);
 		GridBagLayout gbl_utilitiesPanel = new GridBagLayout();
 		gbl_utilitiesPanel.columnWidths = new int[] {0, 0, 30, 30, 0};
-		gbl_utilitiesPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_utilitiesPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gbl_utilitiesPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_utilitiesPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_utilitiesPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		utilitiesPanel.setLayout(gbl_utilitiesPanel);
 		
 		JLabel lblUtilities = new JLabel("Utilities:");
@@ -443,11 +443,25 @@ public class Main extends JFrame {
 			}
 		});
 		GridBagConstraints gbc_btnDisplayData = new GridBagConstraints();
-		gbc_btnDisplayData.insets = new Insets(0, 0, 0, 5);
+		gbc_btnDisplayData.insets = new Insets(0, 0, 5, 5);
 		gbc_btnDisplayData.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnDisplayData.gridx = 3;
 		gbc_btnDisplayData.gridy = 4;
 		utilitiesPanel.add(btnDisplayData, gbc_btnDisplayData);
+		
+		JButton btnGenerateReport = new JButton("GENERATE REPORT");
+		btnGenerateReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String result = dataSet.generateReport();
+				textArea.setText(result);
+			}
+		});
+		GridBagConstraints gbc_btnGenerateReport = new GridBagConstraints();
+		gbc_btnGenerateReport.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGenerateReport.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnGenerateReport.gridx = 3;
+		gbc_btnGenerateReport.gridy = 5;
+		utilitiesPanel.add(btnGenerateReport, gbc_btnGenerateReport);
 		
 		JScrollPane messagePane = new JScrollPane();
 		messagePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

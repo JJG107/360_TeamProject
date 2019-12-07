@@ -779,6 +779,7 @@ public class DataSet {
 				}
 				
 				// Graph
+				writer.println("\nGraph");
 				int[] graphCounts = getGraphCount();
 				float[] graphRanges = getGraphRanges();
 				int biggestCount = UtilityFunctions.findHighestIntIndex(graphCounts);
