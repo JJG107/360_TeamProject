@@ -82,8 +82,7 @@ public class Main extends JFrame {
 		JTextArea gradeCount80 = new JTextArea();
 		JTextArea gradeCount90 = new JTextArea();
 		JTextArea gradeCount100 = new JTextArea();
-		
-		
+	
 		JTextArea textArea = new JTextArea();
 		DataSet dataSet = new DataSet();
 		setTitle("Grade Analytics");
@@ -154,7 +153,7 @@ public class Main extends JFrame {
 		btnSetBounds.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String result = dataSet.setBoundaries(minBoundField.getText(), maxBoundField.getText());
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnSetBounds = new GridBagConstraints();
@@ -192,8 +191,8 @@ public class Main extends JFrame {
 		JButton btnAddGrade = new JButton("ADD GRADE");
 		btnAddGrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dataSet.appendSingleValue(enterGradeField.getText());
-				// TODO
+				String result = dataSet.appendSingleValue(enterGradeField.getText());
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnAddGrade = new GridBagConstraints();
@@ -224,7 +223,7 @@ public class Main extends JFrame {
 		btnDeleteGrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.deleteGrade(deleteGradeField.getText());
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnDeleteGrade = new GridBagConstraints();
@@ -266,8 +265,9 @@ public class Main extends JFrame {
 			    chooser.setFileFilter(filter);
 			    int returnVal = chooser.showOpenDialog(null);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
-			            result = chooser.getSelectedFile().getName();
-			            // TODO
+			            result = chooser.getSelectedFile().getAbsolutePath();
+			            result = dataSet.createDataFromFile(result);
+			            textArea.setText(result);
 			    }
 			}
 		});
@@ -289,8 +289,9 @@ public class Main extends JFrame {
 			    chooser.setFileFilter(filter);
 			    int returnVal = chooser.showOpenDialog(null);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
-			            result = chooser.getSelectedFile().getName();
-			            // TODO
+			            result = chooser.getSelectedFile().getAbsolutePath();
+			            result = dataSet.appendDataFromFile(result);
+			            textArea.setText(result);
 			    }
 			}
 		});
@@ -331,7 +332,7 @@ public class Main extends JFrame {
 		btnCount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = "" + dataSet.getDataCount();
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnCount = new GridBagConstraints();
@@ -345,7 +346,7 @@ public class Main extends JFrame {
 		btnMean.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getMean();
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnMean = new GridBagConstraints();
@@ -359,7 +360,7 @@ public class Main extends JFrame {
 		btnMaxGrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getMax();
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnMaxGrade = new GridBagConstraints();
@@ -373,7 +374,7 @@ public class Main extends JFrame {
 		btnMedian.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getMedian();
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnMedian = new GridBagConstraints();
@@ -387,6 +388,7 @@ public class Main extends JFrame {
 		btnMinGrade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getMin();
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnMinGrade = new GridBagConstraints();
@@ -400,6 +402,7 @@ public class Main extends JFrame {
 		btnMode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getMode();
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnMode = new GridBagConstraints();
@@ -413,9 +416,9 @@ public class Main extends JFrame {
 		uaWrapper.add(utilitiesPanel);
 		GridBagLayout gbl_utilitiesPanel = new GridBagLayout();
 		gbl_utilitiesPanel.columnWidths = new int[] {0, 0, 30, 30, 0};
-		gbl_utilitiesPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_utilitiesPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gbl_utilitiesPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_utilitiesPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_utilitiesPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		utilitiesPanel.setLayout(gbl_utilitiesPanel);
 		
 		JLabel lblUtilities = new JLabel("Utilities:");
@@ -444,7 +447,7 @@ public class Main extends JFrame {
 		btnDisplayErrors.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = UtilityFunctions.makeListOfStringsOneString(dataSet.getErrorLog());
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnDisplayErrors = new GridBagConstraints();
@@ -522,15 +525,29 @@ public class Main extends JFrame {
 		btnDisplayData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String result = dataSet.getDataSetAsString();
-				// TODO
+				textArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnDisplayData = new GridBagConstraints();
-		gbc_btnDisplayData.insets = new Insets(0, 0, 0, 5);
+		gbc_btnDisplayData.insets = new Insets(0, 0, 5, 5);
 		gbc_btnDisplayData.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnDisplayData.gridx = 3;
 		gbc_btnDisplayData.gridy = 4;
 		utilitiesPanel.add(btnDisplayData, gbc_btnDisplayData);
+		
+		JButton btnGenerateReport = new JButton("GENERATE REPORT");
+		btnGenerateReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String result = dataSet.generateReport();
+				textArea.setText(result);
+			}
+		});
+		GridBagConstraints gbc_btnGenerateReport = new GridBagConstraints();
+		gbc_btnGenerateReport.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGenerateReport.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnGenerateReport.gridx = 3;
+		gbc_btnGenerateReport.gridy = 5;
+		utilitiesPanel.add(btnGenerateReport, gbc_btnGenerateReport);
 		
 		JScrollPane messagePane = new JScrollPane();
 		messagePane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -740,5 +757,6 @@ public class Main extends JFrame {
 		gradeCount100.setText("Number of grades:");
 		gradeCount100.setLineWrap(true);
 		distributionInnerPanel.add(gradeCount100);
+	}
 	}
 }
