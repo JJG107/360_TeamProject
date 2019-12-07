@@ -20,17 +20,9 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.CardLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
-import javax.swing.BoxLayout;
-
-import java.text.DecimalFormat;
 
 public class Main extends JFrame {
 
@@ -757,6 +749,5 @@ public class Main extends JFrame {
 		gradeCount100.setText("Number of grades:");
 		gradeCount100.setLineWrap(true);
 		distributionInnerPanel.add(gradeCount100);
-	}
 	}
 }
