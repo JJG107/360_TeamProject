@@ -232,8 +232,8 @@ public class Main extends JFrame {
 			    int returnVal = chooser.showOpenDialog(null);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
 			            result = chooser.getSelectedFile().getAbsolutePath();
+			            result = dataSet.createDataFromFile(result);
 			            textArea.setText(result);
-			            dataSet.createDataFromFile(result);
 			    }
 			}
 		});
@@ -256,8 +256,8 @@ public class Main extends JFrame {
 			    int returnVal = chooser.showOpenDialog(null);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
 			            result = chooser.getSelectedFile().getAbsolutePath();
+			            result = dataSet.appendDataFromFile(result);
 			            textArea.setText(result);
-			            dataSet.appendDataFromFile(result);
 			    }
 			}
 		});

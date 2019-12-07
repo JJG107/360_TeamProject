@@ -212,7 +212,8 @@ public class DataSet {
 				}
 				else
 				{
-					message = "No data in the file \"" + fileName + "\" to create dataset";
+					message = "No data in the file \"" + fileName + "\" to create dataset, "
+							+ "or the file contents are not properly formatted.";
 					addError(message);
 				}
 			}
@@ -309,7 +310,8 @@ public class DataSet {
 				}
 				else
 				{
-					message = "No data in the file \"" + fileName + "\" to append to dataset";
+					message = "No data in the file \"" + fileName + "\" to append to dataset, or the "
+							+ "file contents are not properly formatted.";
 					addError(message);
 				}
 			}
