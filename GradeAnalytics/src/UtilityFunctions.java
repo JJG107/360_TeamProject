@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -74,6 +75,26 @@ public class UtilityFunctions {
 		for (int i = 0; i < list.size(); i++)
 		{
 			toReturn += list.get(i) + "\n";
+		}
+		return toReturn;
+	}
+	
+	public static String[] decimalFormatString(String[] stringsToFormat)
+	{
+		String pattern = "0.0";
+	    DecimalFormat decimalFormat = new DecimalFormat(pattern);
+		String[] toReturn = new String[stringsToFormat.length];
+		for (int i = 0; i < stringsToFormat.length; i++)
+		{
+			if (!(stringsToFormat[i].compareTo("N/A") == 0))
+			{
+				float floatToFormat = Float.parseFloat(stringsToFormat[i]);
+				toReturn[i] = "" + decimalFormat.format(floatToFormat);
+			}
+			else
+			{
+				toReturn[i] = "N/A";
+			}
 		}
 		return toReturn;
 	}
