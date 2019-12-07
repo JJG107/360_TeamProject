@@ -1,65 +1,19 @@
-import java.util.ArrayList;
-
-import java.lang.Object;
-import java.util.Scanner;
 import java.awt.*;
-import javax.swing.*;
-
-//public class JXCanvas extends Canvas {
-//	
-//	FontMetrics fm;
-//	int titleHeight;
-//	int labelWidth;
-//	
-//	
-//	int padding = 6;
-//	int top;
-//	int bottom;
-//	
-//public static class Drawing extends Canvas {
-//	
-//	public static void main(String[] args) {
-//		JFrame frame = new JFrame("bars");
-//		
-//		Canvas canvas = new Drawing();
-//		canvas.setSize(400, 400);
-//		frame.add(canvas);
-//		frame.pack();
-//		frame.setVisible(true);
-//	}
-//	
-//	public void paint(Graphics g) {
-//		g.create(getX(), getY(), getWidth(), getHeight());
-//	}
-//}
-//}
 
 /**
  * Contains a variety of utility functions.
- * @author Michael Cai
+ * @authors Michael Cai, Priya Ganguly
  *
  */
 public class UtilityFunctions {
 	
-	int position; int increment; int right; int left; int bottom; int top; int min;
-	int padding = 4;
-	int[] nums;
-	String[] cat;
-	String t;
-	int max = 0;
-	int width = 0;
-	int height = 0;
-	int titleHeight;
-	String title;
-	FontMetrics fm;
-	int dist1, dist2, dist3, dist4, dist5, dist6, dist7, dist8, dist9, dist10;
 	int highestScore;
+	int maxX = 30;
+	String returned = "";
 
 	public String makeGraph(int counts[], int ranges[]) {
 		System.out.println("Each X represents 10 students.");
 		System.out.println("----------------------------------------------------");
-		
-		int maxX = 30;
 		
 		//distribution1
 		for (int i = 0; i <= ranges[1]; i++) {
@@ -140,17 +94,10 @@ public class UtilityFunctions {
 				returned += "X";
 			returned += ranges[10] + '\n';
 		}
-		
 		returned += "\n\nGrade Analytics Bar Chart" + '\n';
 		return returned;
 	 }
-	   
-
-	   
 	
-	
-
-
 	/**
 	 * Determines the largest integer in an
 	 * array of integers
@@ -221,71 +168,4 @@ public class UtilityFunctions {
 		}
 		return toReturn;
 	}
-	
-	
-	
-	public void JXCanvas(int[] x, String[] y, String a) {
-		
-		this.title = title;
-		
-	    for(int i = 0; i < x.length; i++){
-	        if(x[i] > max)
-	            max = x[i];
-	    }
-	    
-	    nums = x;
-	    cat = y;
-	    t = a;
-	    width = nums.length*100 + nums.length*10;
-	    height = max*10 + 500;
-	    setSize(width,height);
-	}
-	
-	private void setSize(int width2, int height2) {
-		// TODO Auto-generated method stub
-	}
-
-	//paints the bar graph
-	public void paint(Graphics g, int width) {
-		fm = getFontMetrics(getFont());
-		titleHeight = fm.getHeight();
-		g.drawString(title, (width - fm.stringWidth(title))/2, top);
-		
-		//draws the min and max values
-		g.drawString(new Integer(min).toString(), padding, bottom);
-	    g.drawString(new Integer(max).toString(), padding, top + titleHeight);
-	}
-	
-	private Object size() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private FontMetrics getFontMetrics(Object font) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private Object getFont() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void clearGraph() {
-	}
-	
-	void bars(Graphics g, double x1, double y1, double x2, double y2, int width, int height) {
-        // Draw a bar from the point (x1,y1) to (x2,y2).
-        
-     int a1, b1;   // pixels
-     int a2, b2;   // pixels
-     
-     a1 = (int)( (x1 + 5) / 10 * width );
-     b1 = (int)( (5 - y1) / 10 * height );
-     a2 = (int)( (x2 + 5) / 10 * width );
-     b2 = (int)( (5 - y2) / 10 * height );
-     
-     g.drawLine(a1,b1,a2,b2);
-     
-  }
 }
