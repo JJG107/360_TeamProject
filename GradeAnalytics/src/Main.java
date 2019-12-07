@@ -50,6 +50,7 @@ public class Main extends JFrame {
 	 */
 	public Main() {
 		JTextArea textArea = new JTextArea();
+		JTextArea graphTextArea = new JTextArea();
 		DataSet dataSet = new DataSet();
 		setTitle("Grade Analytics");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -398,8 +399,10 @@ public class Main extends JFrame {
 		JButton btnGenGraph = new JButton("GENERATE GRAPH");
 		btnGenGraph.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
-				// Implementation for drawing graph to canvas
+			
+				String result = UtilityFunctions.makeGraph(dataSet.getGraphCount(), dataSet.getGraphRanges());
+				
+				graphTextArea.setText(result);
 			}
 		});
 		GridBagConstraints gbc_btnGenGraph = new GridBagConstraints();
@@ -477,6 +480,14 @@ public class Main extends JFrame {
 		
 		JPanel graphOutputPanel = new JPanel();
 		tabbedPane.addTab("Graph", null, graphOutputPanel, null);
+		graphOutputPanel.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		// declared at top
+		graphTextArea.setWrapStyleWord(true);
+		graphTextArea.setLineWrap(true);
+		graphTextArea.setEditable(false);
+		graphTextArea.setText("Graph will be displayed here");
+		graphOutputPanel.add(graphTextArea);
 		
 		JPanel distributionOutputPanel = new JPanel();
 		tabbedPane.addTab("Distribution", null, distributionOutputPanel, null);
