@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 /**
@@ -761,6 +762,7 @@ public class DataSet {
 				writer.println(toAppend);
 				
 				// The Dataset
+				writer.println("\nDataset:");
 				toAppend = getDataSetAsString();
 				writer.println(toAppend);
 				
@@ -780,7 +782,7 @@ public class DataSet {
 				writer.println(toAppend);
 				
 				// Distribution
-				toAppend = "Distribution:\n";
+				toAppend = "\nDistribution:";
 				writer.println(toAppend);
 				String[] distribution = createDistribution();
 
@@ -797,6 +799,8 @@ public class DataSet {
 				}
 				
 				// Graph
+				String pattern = "0.0";
+				DecimalFormat decimalFormat = new DecimalFormat(pattern);
 				writer.println("\nGraph");
 				int[] graphCounts = getGraphCount();
 				float[] graphRanges = getGraphRanges();
@@ -805,14 +809,16 @@ public class DataSet {
 				for (int i = 0; i < graphCounts.length; i++)
 				{
 					toAppend = "";
-					toAppend += graphRanges[i] + " - " + graphRanges[i+1] + "\t|";
-					starsToDraw = graphCounts[i] / biggestCount;
-					toAppend += UtilityFunctions.repeatStringNTimes("*", starsToDraw);
+					toAppend += decimalFormat.format(graphRanges[i])
+							+ " - " + decimalFormat.format(graphRanges[i+1]) + "\t|";
+					starsToDraw = (int)((double)graphCounts[i] / biggestCount * 10);
+					toAppend += UtilityFunctions.repeatStringNTimes("*", starsToDraw)
+								+ " " + graphCounts[i];
 					writer.println(toAppend);
 				}
 				
 				// Error Log
-				writer.println("\nError Log\n");
+				writer.println("\nError Log:");
 				ArrayList<String> errors = getErrorLog();
 				for (int i = 0; i < errors.size(); i++)
 				{
@@ -971,8 +977,8 @@ public class DataSet {
 				toRemove.add(data.get(i));
 				removedEntries++;
 				
-				message = "The grade value\"" + data.get(i) + "\" is not within the new bounds, " +
-						" it will be removed from the current dataset";
+				message = "The grade value \"" + data.get(i) + "\" is not within the new bounds, " +
+						"it will be removed from the current dataset";
 				addError(message);
 			}
 		}
