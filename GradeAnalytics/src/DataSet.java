@@ -375,13 +375,22 @@ public class DataSet {
 			if (data.size() > 0)
 			{
 				boolean found = false;
-				message = "That datapoint does not exist";
+				message = "The datapoint \"" + gradeToDelete +  "\" does not exist in the current dataset";
 				for (int i = 0; i < data.size(); i++)
 				{
 					if (data.get(i) == floatToDelete)
 					{
 						found = true;
 						data.remove(i);
+						ArrayList<Float> sortedData = (ArrayList<Float>) data.clone();
+						sortedData.sort(null);
+						
+						// recompute and update max/min if needed when a grade is deleted
+						if(sortedData.get(sortedData.size() - 1) < maxGrade)
+							maxGrade = sortedData.get(sortedData.size() - 1);
+						if(sortedData.get(0) > minGrade)
+							minGrade = sortedData.get(0);
+						
 						message = "Successfully removed";
 					}
 				}
@@ -398,7 +407,7 @@ public class DataSet {
 		}
 		else
 		{
-			message = "The grade to delete \"" + "\" is not a float or int";
+			message = "The grade to delete \"" + gradeToDelete + "\" is not a float or int";
 		}
 		return message;
 	}
@@ -823,7 +832,15 @@ public class DataSet {
 		String dataAsString = "";
 		ArrayList<Integer> sortedData = (ArrayList<Integer>) data.clone();
 		sortedData.sort(null);
-		int columnSize = sortedData.size() / 4; // Split into four columns
+		
+		int columnSize = 0;
+		
+		// split into 4 columns, with the last column being smaller if needed
+		if((float) sortedData.size() / 4 > sortedData.size() / 4)
+			columnSize = sortedData.size() / 4 + 1;
+		else
+			columnSize = sortedData.size() / 4;
+		
 		int itemsPrinted;
 		for (int i = 0; i < columnSize; i++)
 		{
@@ -834,7 +851,7 @@ public class DataSet {
 				{
 					itemsPrinted++;
 					dataAsString += sortedData.get(j);
-					if (itemsPrinted != 3)
+					if (itemsPrinted != 4)
 					{
 						dataAsString += "\t";
 					}

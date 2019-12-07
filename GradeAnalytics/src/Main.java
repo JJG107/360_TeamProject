@@ -231,8 +231,9 @@ public class Main extends JFrame {
 			    chooser.setFileFilter(filter);
 			    int returnVal = chooser.showOpenDialog(null);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
-			            result = chooser.getSelectedFile().getName();
+			            result = chooser.getSelectedFile().getAbsolutePath();
 			            textArea.setText(result);
+			            dataSet.createDataFromFile(result);
 			    }
 			}
 		});
@@ -254,8 +255,9 @@ public class Main extends JFrame {
 			    chooser.setFileFilter(filter);
 			    int returnVal = chooser.showOpenDialog(null);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
-			            result = chooser.getSelectedFile().getName();
+			            result = chooser.getSelectedFile().getAbsolutePath();
 			            textArea.setText(result);
+			            dataSet.appendDataFromFile(result);
 			    }
 			}
 		});
