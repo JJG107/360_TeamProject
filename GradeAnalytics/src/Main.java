@@ -463,43 +463,43 @@ public class Main extends JFrame {
 				for (int i = 0; i < 10; i++) {
 					switch(i) {
 					case 0:
-						average10.setText("Average grades: " + distAveragesArray[i]);
+						average10.setText("Average grade: " + distAveragesArray[i]);
 						gradeCount10.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
 						break;
 					case 1:
-						average20.setText("Average grades: " + distAveragesArray[i]);
+						average20.setText("Average grade: " + distAveragesArray[i]);
 						gradeCount20.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
 						break;
 					case 2:
-						average30.setText("Average grades: " + distAveragesArray[i]);
+						average30.setText("Average grade: " + distAveragesArray[i]);
 						gradeCount30.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
 						break;
 					case 3:
-						average40.setText("Average grades: " + distAveragesArray[i]);
+						average40.setText("Average grade: " + distAveragesArray[i]);
 						gradeCount40.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
 						break;
 					case 4:
-						average50.setText("Average grades: " + distAveragesArray[i]);
+						average50.setText("Average grade: " + distAveragesArray[i]);
 						gradeCount50.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
 						break;
 					case 5:
-						average60.setText("Average grades: " + distAveragesArray[i]);
+						average60.setText("Average grade: " + distAveragesArray[i]);
 						gradeCount60.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
 						break;
 					case 6:
-						average70.setText("Average grades: " + distAveragesArray[i]);
+						average70.setText("Average grade: " + distAveragesArray[i]);
 						gradeCount70.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
 						break;
 					case 7:
-						average80.setText("Average grades: " + distAveragesArray[i]);
+						average80.setText("Average grade: " + distAveragesArray[i]);
 						gradeCount80.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
 						break;
 					case 8:
-						average90.setText("Average grades: " + distAveragesArray[i]);
+						average90.setText("Average grade: " + distAveragesArray[i]);
 						gradeCount90.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
 						break;
 					case 9:
-						average100.setText("Average grades: " + distAveragesArray[i]);
+						average100.setText("Average grade: " + distAveragesArray[i]);
 						gradeCount100.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
 						break;
 					default:
