@@ -388,11 +388,18 @@ public class DataSet {
 						sortedData.sort(null);
 						
 						// recompute and update max/min if needed when a grade is deleted
-						if(sortedData.get(sortedData.size() - 1) < maxGrade)
-							maxGrade = sortedData.get(sortedData.size() - 1);
-						if(sortedData.get(0) > minGrade)
-							minGrade = sortedData.get(0);
-						
+						if (sortedData.size() > 0)
+						{
+							if(sortedData.get(sortedData.size() - 1) < maxGrade)
+								maxGrade = sortedData.get(sortedData.size() - 1);
+							if(sortedData.get(0) > minGrade)
+								minGrade = sortedData.get(0);
+						}
+						else
+						{
+							maxGrade = lowerBound;
+							minGrade = upperBound;
+						}
 						message = "Successfully removed";
 					}
 				}
