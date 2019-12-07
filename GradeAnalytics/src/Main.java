@@ -20,6 +20,17 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.CardLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
+import javax.swing.BoxLayout;
+
+import java.text.DecimalFormat;
 
 public class Main extends JFrame {
 
@@ -49,6 +60,29 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
+		
+		JTextArea average10 = new JTextArea();
+		JTextArea average20 = new JTextArea();
+		JTextArea average30 = new JTextArea();
+		JTextArea average40 = new JTextArea();
+		JTextArea average50 = new JTextArea();
+		JTextArea average60 = new JTextArea();
+		JTextArea average70 = new JTextArea();
+		JTextArea average80 = new JTextArea();
+		JTextArea average90 = new JTextArea();
+		JTextArea average100 = new JTextArea();
+		
+		JTextArea gradeCount10 = new JTextArea();
+		JTextArea gradeCount20 = new JTextArea();
+		JTextArea gradeCount30 = new JTextArea();
+		JTextArea gradeCount40 = new JTextArea();
+		JTextArea gradeCount50 = new JTextArea();
+		JTextArea gradeCount60 = new JTextArea();
+		JTextArea gradeCount70 = new JTextArea();
+		JTextArea gradeCount80 = new JTextArea();
+		JTextArea gradeCount90 = new JTextArea();
+		JTextArea gradeCount100 = new JTextArea();
+	
 		JTextArea textArea = new JTextArea();
 		DataSet dataSet = new DataSet();
 		setTitle("Grade Analytics");
@@ -426,8 +460,58 @@ public class Main extends JFrame {
 		JButton btnGenDist = new JButton("GENERATE DISTRIBUTION");
 		btnGenDist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
-				// Take the list and put it next to the corresponding percent range
+				String distAveragesArray[];
+				int distCountsArray[];
+				distAveragesArray = dataSet.createDistribution();
+				distAveragesArray = UtilityFunctions.decimalFormatString(distAveragesArray);
+				distCountsArray = dataSet.getGraphCount();
+				for (int i = 0; i < 10; i++) {
+					switch(i) {
+					case 0:
+						average10.setText("Average grade: " + distAveragesArray[i]);
+						gradeCount10.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
+						break;
+					case 1:
+						average20.setText("Average grade: " + distAveragesArray[i]);
+						gradeCount20.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
+						break;
+					case 2:
+						average30.setText("Average grade: " + distAveragesArray[i]);
+						gradeCount30.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
+						break;
+					case 3:
+						average40.setText("Average grade: " + distAveragesArray[i]);
+						gradeCount40.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
+						break;
+					case 4:
+						average50.setText("Average grade: " + distAveragesArray[i]);
+						gradeCount50.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
+						break;
+					case 5:
+						average60.setText("Average grade: " + distAveragesArray[i]);
+						gradeCount60.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
+						break;
+					case 6:
+						average70.setText("Average grade: " + distAveragesArray[i]);
+						gradeCount70.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
+						break;
+					case 7:
+						average80.setText("Average grade: " + distAveragesArray[i]);
+						gradeCount80.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
+						break;
+					case 8:
+						average90.setText("Average grade: " + distAveragesArray[i]);
+						gradeCount90.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
+						break;
+					case 9:
+						average100.setText("Average grade: " + distAveragesArray[i]);
+						gradeCount100.setText("Number of grades: " + Integer.toString(distCountsArray[i]));
+						break;
+					default:
+						break;
+					
+					}
+				}
 			}
 		});
 		GridBagConstraints gbc_btnGenDist = new GridBagConstraints();
@@ -480,6 +564,199 @@ public class Main extends JFrame {
 		
 		JPanel distributionOutputPanel = new JPanel();
 		tabbedPane.addTab("Distribution", null, distributionOutputPanel, null);
+		distributionOutputPanel.setLayout(null);
+		
+		JPanel distributionInnerPanel = new JPanel();
+		distributionInnerPanel.setBounds(6, 6, 882, 510);
+		distributionOutputPanel.add(distributionInnerPanel);
+		distributionInnerPanel.setLayout(new GridLayout(0, 5, 0, 0));
+		
+		JPanel panel10 = new JPanel();
+		distributionInnerPanel.add(panel10);
+		panel10.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel label10 = new JLabel("0 - 10%");
+		label10.setBackground(UIManager.getColor("DesktopIcon.borderRimColor"));
+		panel10.add(label10);
+		
+		JPanel panel20 = new JPanel();
+		distributionInnerPanel.add(panel20);
+		
+		JLabel label20 = new JLabel("10 - 20%");
+		label20.setBackground(UIManager.getColor("DesktopIcon.borderRimColor"));
+		panel20.add(label20);
+		
+		JPanel panel30 = new JPanel();
+		distributionInnerPanel.add(panel30);
+		
+		JLabel label30 = new JLabel("20-30%");
+		label30.setBackground(UIManager.getColor("DesktopIcon.borderRimColor"));
+		panel30.add(label30);
+		
+		JPanel panel40 = new JPanel();
+		distributionInnerPanel.add(panel40);
+		
+		JLabel label40 = new JLabel("30-40%");
+		label40.setBackground(UIManager.getColor("DesktopIcon.borderRimColor"));
+		panel40.add(label40);
+		
+		JPanel panel50 = new JPanel();
+		distributionInnerPanel.add(panel50);
+		
+		JLabel label60 = new JLabel("40 - 50%");
+		label60.setBackground(UIManager.getColor("DesktopIcon.borderRimColor"));
+		panel50.add(label60);
+		
+		average10.setBackground(SystemColor.window);
+		average10.setEditable(false);
+		average10.setLineWrap(true);
+		average10.setText("Average grade:");
+		distributionInnerPanel.add(average10);
+		
+		average20.setBackground(SystemColor.window);
+		average20.setEditable(false);
+		average20.setLineWrap(true);
+		average20.setText("Average grade:");
+		distributionInnerPanel.add(average20);
+		
+		average30.setBackground(SystemColor.window);
+		average30.setEditable(false);
+		average30.setLineWrap(true);
+		average30.setText("Average grade:");
+		distributionInnerPanel.add(average30);
+		
+		average40.setBackground(SystemColor.window);
+		average40.setEditable(false);
+		average40.setLineWrap(true);
+		average40.setText("Average grade:");
+		distributionInnerPanel.add(average40);
+		
+		average50.setBackground(SystemColor.window);
+		average50.setEditable(false);
+		average50.setLineWrap(true);
+		average50.setText("Average grade:");
+		distributionInnerPanel.add(average50);
+		
+		gradeCount10.setBackground(SystemColor.window);
+		gradeCount10.setEditable(false);
+		gradeCount10.setLineWrap(true);
+		gradeCount10.setText("Number of grades:");
+		distributionInnerPanel.add(gradeCount10);
+		
+		gradeCount20.setBackground(SystemColor.window);
+		gradeCount20.setEditable(false);
+		gradeCount20.setLineWrap(true);
+		gradeCount20.setText("Number of grades:");
+		distributionInnerPanel.add(gradeCount20);
+		
+		gradeCount30.setBackground(SystemColor.window);
+		gradeCount30.setEditable(false);
+		gradeCount30.setLineWrap(true);
+		gradeCount30.setText("Number of grades:");
+		distributionInnerPanel.add(gradeCount30);
+		
+		gradeCount40.setBackground(SystemColor.window);
+		gradeCount40.setEditable(false);
+		gradeCount40.setLineWrap(true);
+		gradeCount40.setText("Number of grades:");
+		distributionInnerPanel.add(gradeCount40);
+		
+		gradeCount50.setBackground(SystemColor.window);
+		gradeCount50.setEditable(false);
+		gradeCount50.setLineWrap(true);
+		gradeCount50.setText("Number of grades:");
+		distributionInnerPanel.add(gradeCount50);
+		
+		JPanel panel60 = new JPanel();
+		distributionInnerPanel.add(panel60);
+		panel60.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel label50 = new JLabel("50-60%");
+		panel60.add(label50);
+		
+		JPanel panel70 = new JPanel();
+		distributionInnerPanel.add(panel70);
+		
+		JLabel label70 = new JLabel("60 - 70%");
+		panel70.add(label70);
+		
+		JPanel panel80 = new JPanel();
+		distributionInnerPanel.add(panel80);
+		
+		JLabel label80 = new JLabel("70 - 80%");
+		panel80.add(label80);
+		
+		JPanel panel90 = new JPanel();
+		distributionInnerPanel.add(panel90);
+		
+		JLabel label90 = new JLabel("80 - 90%");
+		panel90.add(label90);
+		
+		JPanel panel100 = new JPanel();
+		distributionInnerPanel.add(panel100);
+		
+		JLabel label100 = new JLabel("90 - 100%");
+		panel100.add(label100);
+		
+		average60.setBackground(SystemColor.window);
+		average60.setEditable(false);
+		average60.setText("Average grade:");
+		average60.setLineWrap(true);
+		distributionInnerPanel.add(average60);
+		
+		average70.setBackground(SystemColor.window);
+		average70.setEditable(false);
+		average70.setText("Average grade:");
+		average70.setLineWrap(true);
+		distributionInnerPanel.add(average70);
+		
+		average80.setBackground(SystemColor.window);
+		average80.setEditable(false);
+		average80.setText("Average grade:");
+		average80.setLineWrap(true);
+		distributionInnerPanel.add(average80);
+		
+		average90.setBackground(SystemColor.window);
+		average90.setEditable(false);
+		average90.setText("Average grade:");
+		average90.setLineWrap(true);
+		distributionInnerPanel.add(average90);
+		
+		average100.setBackground(SystemColor.window);
+		average100.setEditable(false);
+		average100.setText("Average grade:");
+		average100.setLineWrap(true);
+		distributionInnerPanel.add(average100);
+		
+		gradeCount60.setBackground(SystemColor.window);
+		gradeCount60.setEditable(false);
+		gradeCount60.setText("Number of grades:");
+		gradeCount60.setLineWrap(true);
+		distributionInnerPanel.add(gradeCount60);
+		
+		gradeCount70.setBackground(SystemColor.window);
+		gradeCount70.setEditable(false);
+		gradeCount70.setText("Number of grades:");
+		gradeCount70.setLineWrap(true);
+		distributionInnerPanel.add(gradeCount70);
+		
+		gradeCount80.setBackground(SystemColor.window);
+		gradeCount80.setEditable(false);
+		gradeCount80.setText("Number of grades:");
+		gradeCount80.setLineWrap(true);
+		distributionInnerPanel.add(gradeCount80);
+		
+		gradeCount90.setBackground(SystemColor.window);
+		gradeCount90.setEditable(false);
+		gradeCount90.setText("Number of grades:");
+		gradeCount90.setLineWrap(true);
+		distributionInnerPanel.add(gradeCount90);
+		
+		gradeCount100.setBackground(SystemColor.window);
+		gradeCount100.setEditable(false);
+		gradeCount100.setText("Number of grades:");
+		gradeCount100.setLineWrap(true);
+		distributionInnerPanel.add(gradeCount100);
 	}
-
+	}
 }

@@ -137,7 +137,7 @@ class DataSetTest {
 		assertEquals(testSet.getDataCount(), 2);
 		result = testSet.deleteGrade("-100");
 		assertEquals(result, "That datapoint does not exist");
-		assertEquals(testSet.getDataCount(), 2);
+		assertEquals(testSet.getDataCount(), "2");
 	}
 
 	/**
