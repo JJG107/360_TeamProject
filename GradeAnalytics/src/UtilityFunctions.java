@@ -178,26 +178,26 @@ public class UtilityFunctions {
 	    g.drawString(new Integer(max).toString(), padding, top + titleHeight);
 	}
 	
-	public void clearGraph() {
-	}
+    	public void clearGraph() {
+    	}
 	
-	void bars(Graphics g, double x1, double y1, double x2, double y2) {
+     	public void bars(Graphics g, double x1, double y1, double x2, double y2) {
         // Draw a bar from the point (x1,y1) to (x2,y2).
         
-     int a1, b1;   // pixels
-     int a2, b2;   // pixels
+     	int a1, b1;   // pixels
+     	int a2, b2;   // pixels
      
-     int width = getSize().width;     // Width of the canvas.
-     int height = getSize().height;   // Height of the canvas. 
+     	int width = getSize().width;     // Width of the canvas.
+     	int height = getSize().height;   // Height of the canvas. 
      
-     a1 = (int)( (x1 + 5) / 10 * width );
-     b1 = (int)( (5 - y1) / 10 * height );
-     a2 = (int)( (x2 + 5) / 10 * width );
-     b2 = (int)( (5 - y2) / 10 * height );
+     	a1 = (int)( (x1 + 5) / 10 * width );
+     	b1 = (int)( (5 - y1) / 10 * height );
+     	a2 = (int)( (x2 + 5) / 10 * width );
+     	b2 = (int)( (5 - y2) / 10 * height );
      
-     g.drawLine(a1,b1,a2,b2);
+     	g.drawLine(a1,b1,a2,b2);
      
-  }
+  	}
 	
 	
 	
