@@ -55,94 +55,94 @@ public class UtilityFunctions {
 	int dist1, dist2, dist3, dist4, dist5, dist6, dist7, dist8, dist9, dist10;
 	int highestScore;
 
-	public void makeGraph(int highestScore, int count, int dist1, int dist2, int dist3, 
-		int dist4, int dist5, int dist6, int dist7, int dist8, int dist9, int dist10) {
+	public String makeGraph(int counts[], int ranges[]) {
 		System.out.println("Each X represents 10 students.");
 		System.out.println("----------------------------------------------------");
 		
 		int maxX = 30;
 		
 		//distribution1
-		for (int i = 1; i <= dist1; i++) {
-			int numX = count/highestScore * maxX;
+		for (int i = 0; i <= ranges[1]; i++) {
+			int numX = counts[1]/highestScore * maxX;
 			for(int k = 1; k <= numX; k++)
 				System.out.print("X");
-			System.out.println("dist1");
+			System.out.println(ranges[1]);
 		}
 		
 		//distribution2
-		for (int i = 1; i <= dist2; i++) {
-			int numX = count/highestScore * maxX;
+		for (int i = ranges[1] + 1; i <= ranges[2]; i++) {
+			int numX = counts[2]/highestScore * maxX;
 			for(int k = 1; k <= numX; k++)
 				System.out.print("X");
-			System.out.println("dist2");
+			System.out.println(ranges[2]);
 		}
 		
 		//distribution3
-		for (int i = 1; i <= dist3; i++) {
-			int numX = count/highestScore * maxX;
+		for (int i = ranges[2] + 1; i <= ranges[3]; i++) {
+			int numX = counts[3]/highestScore * maxX;
 			for(int k = 1; k <= numX; k++)
 				System.out.print("X");
-			System.out.println("dist3");
+			System.out.println(ranges[3]);
 		}
 		
 		//distribution4
-		for (int i = 1; i <= dist4; i++) {
-			int numX = count/highestScore * maxX;
+		for (int i = ranges[3] + 1; i <= ranges[4]; i++) {
+			int numX = counts[4]/highestScore * maxX;
 			for(int k = 1; k <= numX; k++)
 				System.out.print("X");
-			System.out.println("dist4");
+			System.out.println(ranges[4]);
 		}
 		
 		//distribution5
-		for (int i = 1; i <= dist5; i++) {
-			int numX = count/highestScore * maxX;
+		for (int i = ranges[4] + 1; i <= ranges[5]; i++) {
+			int numX = counts[5]/highestScore * maxX;
 			for(int k = 1; k <= numX; k++)
 				System.out.print("X");
-			System.out.println("dist5");
+			System.out.println(ranges[5]);
 		}
 		
 		//distribution6
-		for (int i = 1; i <= dist6; i++) {
-			int numX = count/highestScore * maxX;
+		for (int i = ranges[5] + 1; i <= ranges[6]; i++) {
+			int numX = counts[6]/highestScore * maxX;
 			for(int k = 1; k <= numX; k++)
 				System.out.print("X");
-			System.out.println("dist6");
+			System.out.println(ranges[6]);
 		}
 		
 		//distribution7
-		for (int i = 1; i <= dist7; i++) {
-			int numX = count/highestScore * maxX;
+		for (int i = ranges[6] + 1; i <= ranges[7]; i++) {
+			int numX = counts[7]/highestScore * maxX;
 			for(int k = 1; k <= numX; k++)
 				System.out.print("X");
-			System.out.println("dist7");
+			System.out.println(ranges[7]);
 		}
 		
 		//distribution8
-		for (int i = 1; i <= dist8; i++) {
-			int numX = count/highestScore * maxX;
+		for (int i = ranges[7] + 1; i <= ranges[8]; i++) {
+			int numX = counts[8]/highestScore * maxX;
 			for(int k = 1; k <= numX; k++)
 				System.out.print("X");
-			System.out.println("dist8");
+			System.out.println(ranges[8]);
 		}
 		
 		//distribution9
-		for (int i = 1; i <= dist9; i++) {
-			int numX = count/highestScore * maxX;
+		for (int i = ranges[8] + 1; i <= ranges[9]; i++) {
+			int numX = counts[9]/highestScore * maxX;
 			for(int k = 1; k <= numX; k++)
 				System.out.print("X");
-			System.out.println("dist9");
+			System.out.println(ranges[9]);
 		}
 		
 		//distribution10
-		for (int i = 1; i <= dist10; i++) {
-			int numX = count/highestScore * maxX;
+		for (int i = ranges[9] + 1; i <= ranges[10]; i++) {
+			int numX = counts[10]/highestScore * maxX;
 			for(int k = 1; k <= numX; k++)
 				System.out.print("X");
-			System.out.println("dist10");
+			System.out.println(ranges[10]);
 		}
 		
 		System.out.println("\n\nGrade Analytics Bar Chart");
+		return "";
 	 }
 	   
 
